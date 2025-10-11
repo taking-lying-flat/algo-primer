@@ -1,4 +1,14 @@
 class GeneralToolkit:
+    # ░░░░░░░░░░░ LeetCode 14 —— 最长公共前缀 ░░░░░░░░░░░
+    @staticmethod
+    def longestCommonPrefix(strs: List[str]) -> str:
+        lcp = 0
+        for col in zip(*strs):
+            if len(set(col)) > 1:
+                break
+            lcp += 1
+        return strs[0][:lcp]
+        
     # ░░░░░░░░░░░ LeetCode 169 —— 多数元素 ░░░░░░░░░░░
     @staticmethod
     def majorityElement(nums: List[int]) -> int:
