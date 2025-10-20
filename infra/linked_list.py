@@ -344,3 +344,35 @@ class LinkedListToolkit:
         left = self.mergeKLists_divideConquer(lists[: m // 2])
         right = self.mergeKLists_divideConquer(lists[m // 2 :])
         return self.mergeTwoLists_iterative(left, right)
+
+    # ░░░░░░░░░░░░░░ LeetCode 92 · 反转链表 II ░░░░░░░░░░░░░░
+    def reverseBetween(
+        self, head: Optional[ListNode], left: int, right: int
+    ) -> Optional[ListNode]:
+        """
+        反转链表中从位置 left 到 right 的部分
+            1. 使用虚拟头节点，找到反转区间的前一个节点 p0
+            2. 通过循环定位到 left-1 位置（反转起点的前一个节点）
+            3. 反转 [left, right] 区间的节点：
+               - 使用三指针 pre, cur, nxt 进行原地反转
+               - 循环 (right - left + 1) 次完成区间反转
+            4. 重新连接：
+               - p0.next.next = cur: 原区间头连接到反转后的下一个节点
+               - p0.next = pre: p0 连接到反转后的新头节点
+        """
+        p0 = dummy = ListNode(next=head)
+        for _ in range(left - 1):
+            p0 = p0.next
+        
+        pre = None
+        cur = p0.next
+        for _ in range(right - left + 1):
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nxt
+        
+        p0.next.next = cur
+        p0.next = pre
+        
+        return dummy.next
