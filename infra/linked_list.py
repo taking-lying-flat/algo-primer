@@ -376,3 +376,35 @@ class LinkedListToolkit:
         p0.next = pre
         
         return dummy.next
+
+    # ░░░░░░░░░░░░░░ LeetCode 25 · K 个一组翻转链表 ░░░░░░░░░░░░░░
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        """
+        每 k 个节点一组反转链表，不足 k 个保持原样
+            1. 递归基: 检查剩余节点是否足够 k 个
+               - 用指针 p 向前走 k 步
+               - 若中途为空则返回 head（不足 k 个，保持原样）
+            2. 反转当前 k 个节点:
+               - 使用双指针 pre, cur 进行反转
+               - 循环 k-1 次，将 cur 指向 pre
+            3. 递归处理后续节点:
+               - newHead 指向反转后的新头（即 pre）
+               - head.next 连接递归结果（原 head 变成尾节点）
+            4. 返回当前组的新头节点
+        """
+        p = head
+        for _ in range(k):
+            if not p:
+                return head
+            p = p.next
+    
+        pre, cur = head, head.next
+        for _ in range(k - 1):
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nxt
+    
+        newHead = pre
+        head.next = self.reverseKGroup(cur, k)
+        return newHead
