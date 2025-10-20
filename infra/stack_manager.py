@@ -210,6 +210,28 @@ class StackAlgoUtils:
             stack.append(i)
         return ans
 
+    # ░░░░░░░░░░░░░░ LeetCode 1249 · 移除无效的括号 ░░░░░░░░░░░░░░
+    def minRemoveToMakeValid(self, s: str) -> str:
+        index_to_move = set()
+        stack = []
+    
+        for i, c in enumerate(s):
+            if c not in "()":
+                continue
+            elif c == '(':
+                stack.append(i)
+            elif not stack:
+                index_to_move.add(i)
+            else:
+                stack.pop()
+        
+        index_to_move = index_to_move.union(set(stack))
+        string_builder = []
+        for i, c in enumerate(s):
+            if i not in index_to_move:
+                string_builder.append(c)
+        return "".join(string_builder)
+
     # ░░░░░░░░░░░ LeetCode 84 —— 柱状图中最大的矩形 ░░░░░░░░░░░
     @staticmethod
     def largestRectangleArea(heights: List[int]) -> int:
