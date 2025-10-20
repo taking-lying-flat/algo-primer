@@ -211,7 +211,7 @@ class StackAlgoUtils:
         return ans
 
     # ░░░░░░░░░░░░░░ LeetCode 1249 · 移除无效的括号 ░░░░░░░░░░░░░░
-    def minRemoveToMakeValid(self, s: str) -> str:
+    def minRemoveToMakeValid(s: str) -> str:
         index_to_move = set()
         stack = []
     
@@ -231,6 +231,46 @@ class StackAlgoUtils:
             if i not in index_to_move:
                 string_builder.append(c)
         return "".join(string_builder)
+
+    # ░░░░░░░░░░░░░░ HackerRank · Min Max Riddle ░░░░░░░░░░░░░░
+    @staticmethod
+    def riddle(arr: List[int]) -> List[int]:
+        """
+        找到每个窗口大小(1到n)中，所有窗口最小值的最大值
+            1. 单调栈求边界: 一次遍历同时找到每个元素的左右边界
+               - left[i]: 左边第一个比 arr[i] 小的元素位置，默认 -1
+               - right[i]: 右边第一个比 arr[i] 小的元素位置，默认 n
+               - 使用单调递增栈，当前元素比栈顶小时弹出并更新右边界
+               - 栈顶元素即为当前元素的左边界
+            2. 计算窗口长度: 对每个元素 arr[i]
+               - 能作为最小值的最大窗口长度 = right[i] - left[i] - 1
+               - 更新该长度窗口的最大最小值 ans[length-1]
+            3. 后向传播: 从大窗口到小窗口填充答案
+               - 若窗口大小 k 无答案，用 k+1 的答案填充
+               - 因为大窗口的最小值也可作为小窗口的最小值
+        """
+        n = len(arr)
+        left = [-1] * n
+        right = [n] * n
+        stack = []
+    
+        for i in range(n):
+            while stack and arr[i] < arr[stack[-1]]:
+                prev = stack.pop()
+                right[prev] = i
+            if stack:
+                left[i] = stack[-1]
+            stack.append(i)
+    
+        ans = [0] * n
+        for i in range(n):
+            length = right[i] - left[i] - 1
+            ans[length - 1] = max(ans[length - 1], arr[i])
+    
+        for i in range(n - 2, -1, -1):
+            ans[i] = max(ans[i], ans[i + 1])
+    
+        return ans
 
     # ░░░░░░░░░░░ LeetCode 84 —— 柱状图中最大的矩形 ░░░░░░░░░░░
     @staticmethod
