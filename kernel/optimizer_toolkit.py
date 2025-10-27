@@ -344,6 +344,33 @@ class SubsequenceDPToolkit:
             return min(dfs(i - 1, j), dfs(i, j - 1), dfs(i - 1, j - 1)) + 1
         return dfs(m - 1, n - 1)
 
+    # ░░░░░░░░░░░ LeetCode 44 —— 通配符匹配 ░░░░░░░░░░░
+    @staticmethod
+    def isMatch(s: str, p: str) -> bool:
+        """
+        1. dfs(i, j) 判断 s[0..i] 与 p[0..j] 是否匹配（均为闭区间）
+        2. 边界：当 j < 0（模式串耗尽），只有 i < 0（文本也耗尽）才匹配
+        3. 当 i < 0（文本耗尽），模式串剩余必须全部是 '*' 才匹配
+        4. 若 p[j] 为 '*'：
+           - 视为匹配空串：dfs(i, j - 1)
+           - 视为匹配一个字符并继续吞字符：dfs(i - 1, j)
+        5. 普通字符或 '?'：必须与 s[i] 对齐（'?' 视为任意字符），然后 dfs(i - 1, j - 1)
+        """
+        m, n = len(s), len(p)
+        @cache
+        def dfs(i: int, j: int) -> bool:
+            if j < 0:
+                return i < 0
+            if i < 0:
+                return all(ch == '*' for ch in p[:j + 1])
+            if p[j] == '*':
+                return dfs(i, j - 1) or dfs(i - 1, j)
+            # 普通字符或 '?'
+            if p[j] == '?' or p[j] == s[i]:
+                return dfs(i - 1, j - 1)
+            return False
+        return dfs(m - 1, n - 1)
+
     # ░░░░░░░░░░░ LeetCode 10 —— 正则表达式匹配 ░░░░░░░░░░░
     @staticmethod
     def isMatch(s: str, p: str) -> bool:
