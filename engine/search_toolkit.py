@@ -323,6 +323,47 @@ class BacktrackingToolkit:
             
         return any(dfs(i, j, 0) for i in range(m) for j in range(n))
 
+    # ░░░░░░░░░░░ LeetCode 212 —— 单词搜索 II ░░░░░░░░░░░
+    @staticmethod
+    def findWords(board: List[List[str]], words: List[str]) -> List[str]:
+        class Trie:
+            def __init__(self):
+                self.children = defaultdict(Trie)
+                self.word = None
+            
+            def insert(self, word: str) -> None:
+                node = self
+                for ch in word:
+                    node = node.children[ch]
+                node.word = word
+
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
+        
+        m, n = len(board), len(board[0])
+        ans = set()
+        def dfs(now: Trie, i: int, j: int) -> None:
+            if board[i][j] not in now.children:
+                return
+            ch = board[i][j]
+            now = now.children[ch]
+            nonlocal ans
+            if now.word is not None:
+                ans.add(now.word)
+            
+            board[i][j] = '#'
+            for di, dj in (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
+                if 0 <= di < m and 0 <= dj < n:
+                    dfs(now, di, dj)
+            board[i][j] = ch
+        
+        for i in range(m):
+            for j in range(n):
+                dfs(trie, i, j)
+        
+        return list(ans)
+
     # ░░░░░░░░░░░ LeetCode 131 —— 分割回文串 ░░░░░░░░░░░
     @staticmethod
     def partition(s: str) -> List[List[str]]:
