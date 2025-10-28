@@ -287,3 +287,24 @@ class PointerParadigms:
                 else:
                     right -= 1
         return ans
+
+
+class GroupedLoopSuite:
+    # ░░░░░░░░░░░ LeetCode 228 —— 汇总区间 ░░░░░░░░░░░
+    @staticmethod
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        def render(i: int, j: int) -> str:
+            return str(nums[i]) if i == j else f"{nums[i]}->{nums[j]}"
+
+        n = len(nums)
+        ans = []
+        i = 0
+
+        while i < n:
+            start = i
+            i += 1
+            while i < n and nums[i] == nums[i - 1] + 1:
+                i += 1
+            ans.append(render(start, i - 1))
+
+        return ans
