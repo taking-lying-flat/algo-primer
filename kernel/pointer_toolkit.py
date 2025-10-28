@@ -19,31 +19,6 @@ class SlidingWindowUtils:
             ans = max(ans, right - left + 1)
         return ans
 
-    # ░░░░░░░░░░░ LeetCode 135 —— 分发糖果 ░░░░░░░░░░░
-    @staticmethod
-    def candy(ratings: List[int]) -> int:
-        """
-        分发糖果问题
-            1. 从左到右遍历，保证右边评分高的孩子比左边的多
-            2. 从右到左遍历，保证左边评分高的孩子比右边的多
-        """
-        n = len(ratings)
-        left = [1] * n
-        right = [1] * n
-        
-        for i in range(1, n):
-            if ratings[i] > ratings[i - 1]:
-                left[i] = left[i - 1] + 1
-        
-        for i in range(n - 2, -1, -1):
-            if ratings[i] > ratings[i + 1]:
-                right[i] = right[i + 1] + 1
-                
-        ans = 0
-        for l, r in zip(left, right):
-            ans += max(l, r)
-        return ans
-
     # ░░░░░░░░░░░ LeetCode 438 · 找到字符串中所有字母异位词 ░░░░░░░░░░░
     @staticmethod
     def findAnagrams(s: str, p: str) -> List[int]:
@@ -144,70 +119,29 @@ class PrefixSuffixUtils:
                 right -= 1
         return ans
 
-    # ░░░░░░░░░░░ LeetCode 11 —— 盛最多水的容器 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 135 —— 分发糖果 ░░░░░░░░░░░
     @staticmethod
-    def maxArea(height: List[int]) -> int:
+    def candy(ratings: List[int]) -> int:
         """
-        相向双指针: 找两条线形成的最大面积
-            1. 容器面积 = 宽度 × 高度 = (right-left) × min(h[left], h[right])
-            2. 双指针从两端开始，初始宽度最大
-            3. 每次移动较矮的那一端，因为：
-               - 移动较高端：宽度减小，高度不增，面积必减小
-               - 移动较矮端：宽度减小，但高度可能增加，面积可能增大
-            4. 记录过程中的最大面积
+        分发糖果问题
+            1. 从左到右遍历，保证右边评分高的孩子比左边的多
+            2. 从右到左遍历，保证左边评分高的孩子比右边的多
         """
-        left, right = 0, len(height) - 1
-        max_area = 0
-        while left < right:
-            area = (right - left) * min(height[left], height[right])
-            if height[left] < height[right]:
-                left += 1
-            else:
-                right -= 1
-            max_area = max(max_area, area)
-        return max_area
-
-    # ░░░░░░░░░░░ LeetCode 15 —— 三数之和 ░░░░░░░░░░░
-    @staticmethod
-    def threeSum(nums: List[int]) -> List[List[int]]:
-        """
-        排序+相向双指针: 找所有和为 0 的三元组
-            1. 先排序，方便去重和使用双指针
-            2. 固定第一个数，用双指针在剩余部分找两数之和
-            3. 去重技巧: 
-               - 跳过重复的第一个数
-               - 找到答案后跳过重复的第二、三个数
-            4. 剪枝优化: 
-               - 最小三数之和 > 0，后面不可能有解
-               - 当前数与最大两数之和 < 0，跳过当前数
-        """
-        ans = []
-        n = len(nums)
-        nums.sort()
-
-        for i in range(n - 2):
-            if i > 0 and nums[i] == nums[i - 1]:
-                continue
-            if nums[i] + nums[i + 1] + nums[i + 2] > 0:
-                break
-            if nums[i] + nums[-2] + nums[-1] < 0:
-                continue
-            
-            left, right = i + 1, n - 1
-            while left < right:
-                s = nums[i] + nums[left] + nums[right]
-                if s == 0:
-                    ans.append([nums[i], nums[left], nums[right]])
-                    left += 1
-                    right -= 1
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
-                elif s < 0:
-                    left += 1
-                else:
-                    right -= 1
+        n = len(ratings)
+        left = [1] * n
+        right = [1] * n
+        
+        for i in range(1, n):
+            if ratings[i] > ratings[i - 1]:
+                left[i] = left[i - 1] + 1
+        
+        for i in range(n - 2, -1, -1):
+            if ratings[i] > ratings[i + 1]:
+                right[i] = right[i + 1] + 1
+                
+        ans = 0
+        for l, r in zip(left, right):
+            ans += max(l, r)
         return ans
 
 
@@ -287,3 +221,69 @@ class PointerParadigms:
         reverse(0, n - 1)    # 整体翻转
         reverse(0, k - 1)    # 前 k 个翻转
         reverse(k, n - 1)    # 后 n-k 个翻转
+
+    # ░░░░░░░░░░░ LeetCode 11 —— 盛最多水的容器 ░░░░░░░░░░░
+    @staticmethod
+    def maxArea(height: List[int]) -> int:
+        """
+        相向双指针: 找两条线形成的最大面积
+            1. 容器面积 = 宽度 × 高度 = (right-left) × min(h[left], h[right])
+            2. 双指针从两端开始，初始宽度最大
+            3. 每次移动较矮的那一端，因为：
+               - 移动较高端：宽度减小，高度不增，面积必减小
+               - 移动较矮端：宽度减小，但高度可能增加，面积可能增大
+            4. 记录过程中的最大面积
+        """
+        left, right = 0, len(height) - 1
+        max_area = 0
+        while left < right:
+            area = (right - left) * min(height[left], height[right])
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+            max_area = max(max_area, area)
+        return max_area
+
+    # ░░░░░░░░░░░ LeetCode 15 —— 三数之和 ░░░░░░░░░░░
+    @staticmethod
+    def threeSum(nums: List[int]) -> List[List[int]]:
+        """
+        排序+相向双指针: 找所有和为 0 的三元组
+            1. 先排序，方便去重和使用双指针
+            2. 固定第一个数，用双指针在剩余部分找两数之和
+            3. 去重技巧: 
+               - 跳过重复的第一个数
+               - 找到答案后跳过重复的第二、三个数
+            4. 剪枝优化: 
+               - 最小三数之和 > 0，后面不可能有解
+               - 当前数与最大两数之和 < 0，跳过当前数
+        """
+        ans = []
+        n = len(nums)
+        nums.sort()
+
+        for i in range(n - 2):
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            if nums[i] + nums[i + 1] + nums[i + 2] > 0:
+                break
+            if nums[i] + nums[-2] + nums[-1] < 0:
+                continue
+            
+            left, right = i + 1, n - 1
+            while left < right:
+                s = nums[i] + nums[left] + nums[right]
+                if s == 0:
+                    ans.append([nums[i], nums[left], nums[right]])
+                    left += 1
+                    right -= 1
+                    while left < right and nums[left] == nums[left - 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right + 1]:
+                        right -= 1
+                elif s < 0:
+                    left += 1
+                else:
+                    right -= 1
+        return ans
