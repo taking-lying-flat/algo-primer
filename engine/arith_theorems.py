@@ -1,6 +1,6 @@
 class CongruenceToolKit:
     # ░░░░░░░░░░ LeetCode 1015 - 可被 K 整除的最小整数 (Smallest Integer Divisible by K) ░░░░░░░░░░
-    def smallestRepunitDivByK(self, k: int) -> int:
+    def smallestRepunitDivByK(k: int) -> int:
         """
         余数迭代 + 鸽巢原理
             1. 若 k 含因子 2 或 5，则不存在答案，返回 -1
