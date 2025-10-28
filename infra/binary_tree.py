@@ -368,6 +368,34 @@ class BinaryTreeDPEngine:
         dfs(root)
         return ans
 
+    # ░░░░░░░░░░░ LeetCode 113 —— 路径总和 II ░░░░░░░░░░░
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        """
+        路径总和 II —— 从根到叶子的路径和等于目标值    DFS + 回溯（按 437 模板的讲法整理）
+             1. 维护两样状态：当前路径 path、剩余和 left（初值 targetSum）。
+             2. 进入节点：path.append(node.val)，left -= node.val（前序处理）。
+             3. 叶子判定：若 node 无左右子且 left == 0，则把 path 的拷贝加入答案。
+             4. 递归探索：对 node.left 与 node.right 继续 DFS。
+             5. 回溯恢复：本帧结束前执行 path.pop()，确保 push/pop 成对（避免提前 return 破坏回溯）。
+        """
+        ans: List[List[int]] = []
+        path: List[int] = []
+
+        def dfs(node: Optional[TreeNode], left: int) -> None:
+            if node is None:
+                return
+            path.append(node.val)
+            left -= node.val
+            if node.left is None and node.right is None and left == 0:
+                ans.append(path.copy())  # 也可以 path[:]
+            else:
+                dfs(node.left, left)
+                dfs(node.right, left)
+            path.pop()  # 回溯恢复现场
+
+        dfs(root, targetSum)
+        return ans
+
     # ░░░░░░░░░░░ LeetCode 437 —— 路径总和 III ░░░░░░░░░░░
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
         """
