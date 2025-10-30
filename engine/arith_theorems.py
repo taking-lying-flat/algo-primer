@@ -1,3 +1,29 @@
+def sieve_eratosthenes(n: int) -> List[int]:
+    if n < 2:
+        return []
+    is_prime = [True] * (n + 1)
+    is_prime[0] = is_prime[1] = False
+    p = 2
+    while p * p <= n:
+        if is_prime[p]:
+            for i in range(p * p, n + 1, p):
+                is_prime[i] = False
+        p += 1
+    return [i for i in range(2, n + 1) if is_prime[i]]
+
+
+def sieve_of_euler(n: int) -> List[int]:
+    vis = [False] * (n + 1)
+    primes = []
+    for i in range(2, n + 1):
+        if not vis[i]: primes.append(i)
+        for j in primes:
+            if j * i > n: break
+            vis[j * i] = True
+            if i % j == 0: break
+    return primes
+
+
 class CongruenceToolKit:
     # ░░░░░░░░░░ LeetCode 1015 - 可被 K 整除的最小整数 (Smallest Integer Divisible by K) ░░░░░░░░░░
     def smallestRepunitDivByK(k: int) -> int:
