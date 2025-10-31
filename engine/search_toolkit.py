@@ -3,32 +3,6 @@ from typing import List, Deque, Tuple, Set
 
 
 class BacktrackingToolkit:
-    """
-    ▎1. 递归 (Recursion): 将原问题转化为规模更小但结构相同的子问题，通过解决子问题并组合其结果来解决原问题
-      • 自顶向下: 从目标出发，逐层分解直至触底 | 延迟计算: 先构建调用链，后自底向上求值 | 隐式栈: 利用系统调用栈自动管理中间状态
-    
-    ▎2. 边界条件 (Base Case): 递归终止条件，防止无限递归的安全阀
-      • 空值边界: 处理空集、空串、空树等退化情况 | 单元素边界: 不可再分的原子单位 | 数值边界: 计数器归零、索引越界等
-    
-    ▎3. 调用栈 (Call Stack): 保存函数调用信息的LIFO数据结构，随递归深入而增长，随递归返回而收缩
-      • 压栈: 函数调用时新栈帧入栈 | 弹栈: 函数返回时栈帧出栈 | 栈溢出: 递归过深导致栈空间耗尽
-    
-    ▎4. 栈帧 (Stack Frame): 记录一次函数调用的完整上下文（局部变量、参数、返回地址、动态链接）
-      • 每个递归层级对应一个独立栈帧 | 栈帧数量=递归深度 | 栈帧链形成从当前执行点到递归起点的完整路径
-
-    ▎5. 回溯 (Backtracking): 系统化穷举搜索，遇到无效分支时撤销选择并尝试其他可能
-      • 选择(Choose): 做出决策 | 探索(Explore): 递归探索 | 撤销(Unchoose): 恢复到选择前状态
-      • 回溯是递归的特殊应用，强调状态的保存与恢复，在递归基础上增加显式状态管理
-    
-    ▎6. 兄弟节点 (Siblings): 同一父节点产生的多个子节点，时间上顺序执行，空间上复用相同栈位置
-      • 执行时机: 父函数for循环中，兄弟A返回后栈帧弹出，才创建兄弟B的栈帧
-      • 共享风险: 兄弟栈帧不同时存在，但共享父栈帧的可变对象(如path)，需撤销修改防止污染
-
-    ▎7. 递归结构形态 (Recursion Structures): 递归执行过程形成的逻辑拓扑，由子问题分解模式和重叠程度决定
-      • 递归链 (Recursion Chain): 每层仅派生 1 个子调用，执行路径呈线性链表；深度 = 调用次数，时间复杂度 O(n) ┆ 阶乘
-      • 递归树 (Recursion Tree): 每层可派生 ≥2 个子调用，执行结构呈树形；节点数 ≈ 分支ᵈ，常带指数复杂度 ┆ 朴素斐波那契、全排列
-      • 递归 DAG (Memoized Recursion): 备忘录共享重复子问题，将树压缩为有向无环图；节点数 ≤ 状态数，复杂度降为多项式 ┆ 记忆化斐波那契
-    """
     # ░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░
     @staticmethod
     def subsets(nums: List[int]) -> List[List[int]]:
@@ -81,6 +55,42 @@ class BacktrackingToolkit:
         
         dfs(0, 0)
         return subsets
+
+    # ░░░░░░░░░░░░░░ LeetCode 90 · 子集 II ░░░░░░░░░░░░░░
+    @staticmethod
+    def subsetsWithDup(nums: List[int]) -> List[List[int]]:
+        """
+        生成所有子集(含重复元素): 选或跳过重复的回溯法
+           1. 先排序，让重复元素相邻
+           2. 对每个元素，有两种选择：
+              - 选择当前元素，递归下一个位置
+              - 不选当前元素，跳过所有相同元素
+           3. 到达末尾时记录当前路径
+        """
+        nums.sort()
+        n = len(nums)
+        on_path = []
+        ans = []
+    
+        def dfs(u: int) -> None:
+            if u == len(nums):
+                ans.append(on_path[:])
+                return
+            
+            x = nums[u]
+            on_path.append(x)
+            dfs(u + 1)
+            on_path.pop()
+
+            # 不选 x，那么后面所有等于 x 的数都不选
+            # 如果不跳过这些数，会导致「选 x 不选 x'」和「不选 x 选 x'」这两种情况都会加到 ans 中
+            u += 1
+            while u < n and nums[u] == x:
+                u += 1
+            dfs(u)
+        
+        dfs(0)
+        return ans
     
     # ░░░░░░░░░░░░░░ LeetCode 46 · 全排列 ░░░░░░░░░░░░░░
     @staticmethod
