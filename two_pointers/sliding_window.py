@@ -89,6 +89,20 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 1208 —— 尽可能使字符串相等 ░░░░░░░░░░░
+    @staticmethod
+    def equalSubstring(s: str, t: str, maxCost: int) -> int:
+        dist = [abs(ord(a) - ord(b)) for (a, b) in zip(s, t)]
+        ans = left = s = 0
+        for right, x in enumerate(dist):
+            s += x
+            while s > maxCost:
+                s -= dist[left]
+                left += 1
+            ans = max(ans, right - left + 1)
+        return ans
+
+
     # ░░░░░░░░░░░ LeetCode 3634 —— 使数组平衡的最少移除数目 ░░░░░░░░░░░
     @staticmethod
     def minRemoval(nums: List[int], k: int) -> int:
