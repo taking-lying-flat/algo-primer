@@ -1,6 +1,3 @@
-from typing import List
-
-
 class MonotonicStackTemplates:
     # ░░░░░░░░░░░ 找每个元素右边第一个更大的元素 ░░░░░░░░░░░
     @staticmethod
