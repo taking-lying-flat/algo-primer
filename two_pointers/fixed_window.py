@@ -72,6 +72,17 @@ class FixedWindowSuite:
             s -= arr[i - k + 1]
         return ans
 
+
+    # ░░░░░░░░░░░ LeetCode 1423 —— 可获得的最大点数 ░░░░░░░░░░░
+    def maxScore(self, cardPoints: List[int], k: int) -> int:
+        m = len(cardPoints) - k
+        min_s = s = sum(cardPoints[:m])
+
+        for in_, out in zip(cardPoints[m:], cardPoints):
+            s += in_ - out
+            min_s = min(min_s, s)
+        return sum(cardPoints) - min_s
+
     
     # ░░░░░░░░░░░ LeetCode 1456 —— 定长子串中元音的最大数目 ░░░░░░░░░░░
     @staticmethod
