@@ -76,19 +76,16 @@ class SlidingWindowUtils:
         return ans
 
 
-    # ░░░░░░░░░░░ LeetCode 1493 —— 删掉一个元素以后全为 1 的最长子数组 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 1004 —— 最大连续1的个数 III ░░░░░░░░░░░
     @staticmethod
-    def longestSubarray(nums: List[int]) -> int:
-        ans = cnt0 = left = 0
-        for right, x in enumerate(nums):
-            # 1. 入，nums[right] 进入窗口
-            cnt0 += 1 - x  # 维护窗口中的 0 的个数
-            while cnt0 > 1:  # 不符合题目要求
-                # 2. 出，nums[left] 离开窗口
-                cnt0 -= 1 - nums[left]  # 维护窗口中的 0 的个数
+    def longestOnes(nums: List[int], k: int) -> int:
+        ans = left = cnt0 = 0
+        for right, num in enumerate(nums):
+            cnt0 += 1 - num
+            while cnt0 > k:
+                cnt0 -= (1 - nums[left])
                 left += 1
-            # 3. 更新答案，注意不是 right-left+1，因为我们要删掉一个数
-            ans = max(ans, right - left)
+            ans = max(ans, right - left + 1)
         return ans
 
 
