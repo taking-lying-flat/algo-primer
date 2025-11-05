@@ -90,3 +90,15 @@ class SlidingWindowUtils:
             # 3. 更新答案，注意不是 right-left+1，因为我们要删掉一个数
             ans = max(ans, right - left)
         return ans
+
+
+    # ░░░░░░░░░░░ LeetCode 3634 —— 使数组平衡的最少移除数目 ░░░░░░░░░░░
+    @staticmethod
+    def minRemoval(nums: List[int], k: int) -> int:
+        nums.sort()
+        max_save = left = 0
+        for right, num in enumerate(nums):
+            while nums[left] * k < num:
+                left += 1
+            max_save = max(max_save, right - left + 1)
+        return len(nums) - max_save
