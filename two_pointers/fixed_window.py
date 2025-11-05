@@ -35,7 +35,6 @@ def fixed_window_template(nums: List[int], k: int) -> Any:
         #    out = nums[left]
         #    例：state -= out / cnt[out]-- / ...
         ...  # TODO: 用 nums[left] 把 state 恢复
-
     return ans
 
 
@@ -120,7 +119,6 @@ class FixedWindowSuite:
             cnt[out] -= 1
             if cnt[out] == 0:
                 del cnt[out]
-
         return ans
 
     
@@ -147,5 +145,4 @@ class FixedWindowSuite:
             cnt[out] -= 1
             if cnt[out] == 0:
                 del cnt[out]
-
         return ans
