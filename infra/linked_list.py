@@ -35,6 +35,7 @@ class LinkedListToolkit:
             cur = cur.next
         return dummy.next
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 19 · 删除链表的倒数第 N 个结点 ░░░░░░░░░░░░░░
     def removeNthFromEnd(
         self, head: Optional[ListNode], n: int
@@ -56,6 +57,7 @@ class LinkedListToolkit:
         left.next = left.next.next
         return dummy.next
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 21 · 合并两个有序链表 ░░░░░░░░░░░░░░
     # -------- 递归版本 --------
     def mergeTwoLists_recursive(
@@ -80,6 +82,7 @@ class LinkedListToolkit:
             list2.next = self.mergeTwoLists_recursive(list1, list2.next)
             return list2
 
+    
     # -------- 迭代版本 --------
     def mergeTwoLists_iterative(
         self, list1: Optional[ListNode], list2: Optional[ListNode]
@@ -104,6 +107,7 @@ class LinkedListToolkit:
         cur.next = list1 or list2
         return dummy.next
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 206 · 反转链表 ░░░░░░░░░░░░░░
     # -------- 递归版本 --------
     def reverseList_recursive(self, head: Optional[ListNode]) -> Optional[ListNode]:
@@ -122,6 +126,7 @@ class LinkedListToolkit:
         head.next = None
         return new_head
 
+    
     # -------- 迭代版本 --------
     def reverseList_iterative(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
@@ -140,6 +145,7 @@ class LinkedListToolkit:
             cur = nxt
         return pre
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 876 · 链表的中间结点 ░░░░░░░░░░░░░░
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
@@ -156,6 +162,7 @@ class LinkedListToolkit:
             fast = fast.next.next
         return slow
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 234 · 回文链表 ░░░░░░░░░░░░░░
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
         """
@@ -174,6 +181,7 @@ class LinkedListToolkit:
             latter = latter.next
         return True
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 160 · 相交链表 ░░░░░░░░░░░░░░
     def getIntersectionNode(
         self, headA: ListNode, headB: ListNode
@@ -192,6 +200,7 @@ class LinkedListToolkit:
             q = q.next if q else headA
         return p
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 141 · 环形链表 ░░░░░░░░░░░░░░
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         """
@@ -209,6 +218,7 @@ class LinkedListToolkit:
                 return True
         return False
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 142 · 环形链表 II ░░░░░░░░░░░░░░
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
@@ -230,6 +240,7 @@ class LinkedListToolkit:
                 return slow
         return None
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 148 · 排序链表 ░░░░░░░░░░░░░░
     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
@@ -253,6 +264,7 @@ class LinkedListToolkit:
         right = self.sortList(slow)
         return self.mergeTwoLists_iterative(left, right)
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 24 · 两两交换链表中的节点 ░░░░░░░░░░░░░░
     # -------- 迭代版本 --------
     def swapPairs_iterative(self, head: Optional[ListNode]) -> Optional[ListNode]:
@@ -299,6 +311,7 @@ class LinkedListToolkit:
         node2.next = node1
         return node2
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 23 · 合并 K 个升序链表 ░░░░░░░░░░░░░░
     # -------- 堆方法 --------
     def mergeKLists_heap(
@@ -345,6 +358,7 @@ class LinkedListToolkit:
         right = self.mergeKLists_divideConquer(lists[m // 2 :])
         return self.mergeTwoLists_iterative(left, right)
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 92 · 反转链表 II ░░░░░░░░░░░░░░
     def reverseBetween(
         self, head: Optional[ListNode], left: int, right: int
@@ -377,6 +391,7 @@ class LinkedListToolkit:
         
         return dummy.next
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 25 · K 个一组翻转链表 ░░░░░░░░░░░░░░
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         """
@@ -409,6 +424,7 @@ class LinkedListToolkit:
         head.next = self.reverseKGroup(cur, k)
         return newHead
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 25 · K 个一组翻转链表 ░░░░░░░░░░░░░░
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         """
