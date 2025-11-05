@@ -1,4 +1,5 @@
 class Solution:
+    # ░░░░░░░░░░░ LeetCode 1456 —— 定长子串中元音的最大数目 ░░░░░░░░░░░
     @staticmethod
     def maxVowels(s: str, k: int) -> int:
         ans = vowel = 0
@@ -19,6 +20,7 @@ class Solution:
                 vowel -= 1
         return ans
 
+    # ░░░░░░░░░░░ LeetCode 2461 —— 长度为 K 的子数组的最大和（元素互不相同）░░░░░░░░░░░
     @staticmethod
     def maximumSubarraySum(nums: List[int], k: int) -> int:
         ans = s = 0
