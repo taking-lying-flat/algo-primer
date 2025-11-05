@@ -114,6 +114,28 @@ class FixedWindowSuite:
         return avg
         
 
+    # ░░░░░░░░░░░ LeetCode 2379 —— 得到 K 个黑块的最少涂色次数 ░░░░░░░░░░░
+    def minimumRecolors(self, blocks: str, k: int) -> int:
+        ans = inf
+        cnt = 0
+
+        for i, block in enumerate(blocks):
+            if block == 'W':
+                cnt += 1
+            
+            left = i - k + 1
+            if left < 0:
+                continue
+            
+            ans = min(ans, cnt)
+            
+            out = blocks[left]
+            if out == 'W':
+                cnt -= 1
+        
+        return ans
+
+    
     # ░░░░░░░░░░░ LeetCode 2461 —— 长度为 K 的子数组的最大和（元素互不相同）░░░░░░░░░░░
     @staticmethod
     def maximumSubarraySum(nums: List[int], k: int) -> int:
