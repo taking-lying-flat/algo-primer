@@ -103,6 +103,23 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 1658 —— 将 x 减到 0 的最小操作数 ░░░░░░░░░░░
+    @staticmethod
+    def minOperations(nums: List[int], x: int) -> int:
+        ans, left, s = -1, 0, 0
+        target = sum(nums) - x
+
+        for right, x in enumerate(nums):
+            s += x
+            while left <= right and s > target:
+                s -= nums[left]
+                left += 1
+            if s == target:
+                ans = max(ans, right - left + 1)
+        
+        return -1 if ans < 0 else len(nums) - ans
+
+
     # ░░░░░░░░░░░ LeetCode 3634 —— 使数组平衡的最少移除数目 ░░░░░░░░░░░
     @staticmethod
     def minRemoval(nums: List[int], k: int) -> int:
