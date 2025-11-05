@@ -20,7 +20,7 @@ class SlidingWindowUtils:
         return ans
 
 
-        # ░░░░░░░░░░░ LeetCode 76 · 最小覆盖子串 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 76 · 最小覆盖子串 ░░░░░░░░░░░
     @staticmethod
     def minWindow(s: str, t: str) -> str:
         """
