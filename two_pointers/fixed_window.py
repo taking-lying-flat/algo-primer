@@ -93,6 +93,25 @@ class FixedWindowSuite:
             if s[left] in "aeiou":
                 vowel -= 1
         return ans
+
+
+    # ░░░░░░░░░░░ LeetCode 2090 —— 半径为 k 的子数组平均值 ░░░░░░░░░░░
+    @staticmethod
+    def getAverages(nums: List[int], k: int) -> List[int]:
+        avg = [-1] * len(nums)
+        s = 0
+        length = k * 2 + 1
+        for i, x in enumerate(nums):
+            s += x
+            left = i - length + 1
+            if left < 0:
+                continue
+            
+            avg[i - k] = s // length
+            out = nums[left]
+            s -= out
+            
+        return avg
         
 
     # ░░░░░░░░░░░ LeetCode 2461 —— 长度为 K 的子数组的最大和（元素互不相同）░░░░░░░░░░░
