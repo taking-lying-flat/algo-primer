@@ -1,5 +1,5 @@
 class SortingToolkit:
-    # ░░░░░░░░░░░░░░ AcWing 785 —— 快速排序 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ 快速排序 ░░░░░░░░░░░░░░
     def quickSort(self, arr: List[int], left: int, right: int) -> None:
         """
         Hoare 分区，原地升序快速排序
@@ -25,7 +25,7 @@ class SortingToolkit:
         self.quickSort(arr, left, j)
         self.quickSort(arr, i, right)
 
-    # ░░░░░░░░░░░░░░ AcWing 787 —— 归并排序 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ 归并排序 ░░░░░░░░░░░░░░
     def mergeSort(self, arr: List[int], left: int, right: int) -> None:
         """
         分治＋双指针合并的原地升序归并排序
@@ -82,7 +82,7 @@ class SortingToolkit:
         return quickselect(0, n - 1, n - k)
 
     
-    # ░░░░░░░░░░░░░░ AcWing 788 —— 逆序对的数量 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ 逆序对的数量 ░░░░░░░░░░░░░░
     def reversePairs(self, nums: List[int], left: int, right: int) -> int:
         """
         归并分治:
