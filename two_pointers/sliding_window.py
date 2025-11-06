@@ -76,6 +76,25 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 904 —— 水果成篮 ░░░░░░░░░░░
+    @staticmethod
+    def totalFruit(fruits: List[int]) -> int:
+        ans = left = 0
+        cnt = defaultdict(int)
+
+        for right, fruit in enumerate(fruits):
+            cnt[fruit] += 1
+            while len(cnt) > 2:
+                out = fruits[left]
+                left += 1
+                cnt[out] -= 1
+                if cnt[out] == 0:
+                    del cnt[out]
+            ans = max(ans, right - left + 1)
+        
+        return ans
+        
+
     # ░░░░░░░░░░░ LeetCode 1004 —— 最大连续1的个数 III ░░░░░░░░░░░
     @staticmethod
     def longestOnes(nums: List[int], k: int) -> int:
