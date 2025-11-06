@@ -199,3 +199,27 @@ class SlidingWindowUtils:
                 left += 1
             max_save = max(max_save, right - left + 1)
         return len(nums) - max_save
+
+    
+    # ░░░░░░░░░░░ LeetCode 3641 —— 最长半重复子数组 ░░░░░░░░░░░
+    @staticmethod
+    def longestSubarray(nums: List[int], k: int) -> int:
+        ans = left = 0
+        cnt = defaultdict(int)
+        seen = set()
+
+        for right, x in enumerate(nums):
+            cnt[x] += 1
+            if cnt[x] > 1:
+                seen.add(x)
+            
+            while len(seen) > k:
+                out = nums[left]
+                cnt[out] -= 1
+                if cnt[out] == 1:
+                    seen.remove(out)
+                left += 1
+            
+            ans = max(ans, right - left + 1)
+        
+        return ans
