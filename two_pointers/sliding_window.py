@@ -157,6 +157,22 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 2024 —— 考试的最大困扰度 ░░░░░░░░░░░
+    @staticmethod
+    def maxConsecutiveAnswers(answerKey: str, k: int) -> int:
+        ans = left = 0
+        cnt = defaultdict(int)
+
+        for right, key in enumerate(answerKey):
+            cnt[key] += 1
+            while cnt['T'] > k and cnt['F'] > k:
+                cnt[answerKey[left]] -= 1
+                left += 1
+            ans = max(ans, right - left + 1)
+        
+        return ans
+
+
     # ░░░░░░░░░░░ LeetCode 2958 —— 最多 K 次重复元素的子数组 ░░░░░░░░░░░
     @staticmethod
     def maxSubarrayLength(nums: List[int], k: int) -> int:
