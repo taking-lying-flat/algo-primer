@@ -139,7 +139,7 @@ class SlidingWindowUtils:
         return -1 if ans < 0 else len(nums) - ans
 
 
-    # ░░░░░░░░░░░ LeetCode 1695 —— 删除子数组的最大得分（Maximum Erasure Value） ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 1695 —— 删除子数组的最大得分 ░░░░░░░░░░░
     @staticmethod
     def maximumUniqueSubarray(nums: List[int]) -> int:
         ans = s = left = 0
