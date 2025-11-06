@@ -173,6 +173,24 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 2516 —— 每种字符至少取 K 个 ░░░░░░░░░░░
+    @staticmethod
+    def takeCharacters(s: str, k: int) -> int:
+        ans = left = 0
+        cnt = Counter(s)
+        if any(cnt[c] < k for c in "abc"):
+            return -1
+
+        for right, c in enumerate(s):
+            cnt[c] -= 1
+            while cnt[c] < k:
+                cnt[s[left]] += 1
+                left += 1
+            ans = max(ans, right - left + 1)
+        
+        return len(s) - ans
+
+
     # ░░░░░░░░░░░ LeetCode 2958 —— 最多 K 次重复元素的子数组 ░░░░░░░░░░░
     @staticmethod
     def maxSubarrayLength(nums: List[int], k: int) -> int:
