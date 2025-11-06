@@ -157,6 +157,22 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 2958 —— 最多 K 次重复元素的子数组 ░░░░░░░░░░░
+    @staticmethod
+    def maxSubarrayLength(nums: List[int], k: int) -> int:
+        ans = left = 0
+        cnt = defaultdict(int)
+
+        for right, x in enumerate(nums):
+            cnt[x] += 1
+            while cnt[x] > k:
+                cnt[nums[left]] -= 1
+                left += 1
+            ans = max(ans, right - left + 1)
+        
+        return ans
+
+    
     # ░░░░░░░░░░░ LeetCode 3634 —— 使数组平衡的最少移除数目 ░░░░░░░░░░░
     @staticmethod
     def minRemoval(nums: List[int], k: int) -> int:
