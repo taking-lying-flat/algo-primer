@@ -245,6 +245,15 @@ class SlidingWindowUtils:
 
 
 class SubarrayCountWindowSuite:
+    """
+    § 越短越合法法  ans += right - left + 1
+
+    内层循环结束后，[left, right] 这个子数组是满足题目要求的。
+    由于子数组越短，越能满足题目要求，所以除了 [left, right]，
+    还有 [left+1, right]，[left+2, right]，…，[right, right] 都是满足要求的。
+    也就是说，当右端点固定在 right 时，左端点在 left, left+1, left+2, …, right
+    的所有子数组都是满足要求的，这一共有 right - left + 1 个。
+    """
     # ░░░░░░░░░░░ LeetCode 713 —— 乘积小于 K 的子数组 ░░░░░░░░░░░
     @staticmethod
     def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
@@ -257,5 +266,20 @@ class SubarrayCountWindowSuite:
                 prod //= nums[left]
                 left += 1
             ans += right - left + 1
+        
+        return ans
+
+    
+    # ░░░░░░░░░░░ LeetCode 2302 —— 统计得分小于 K 的子数组数目 ░░░░░░░░░░░
+    @staticmethod
+    def countSubarrays(nums: List[int], k: int) -> int:
+        ans = left = s = 0
+
+        for right, x in enumerate(nums):
+            s += x
+            while (right - left + 1) * s >= k:
+                s -= nums[left]
+                left += 1
+            ans += (right - left + 1)
         
         return ans
