@@ -43,7 +43,7 @@ class SlidingWindowUtils:
         return ans
         
 
-    # ░░░░░░░░░░░ LeetCode 1004 —— 最大连续1的个数 III ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 1004 —— 最大连续 1 的个数 III ░░░░░░░░░░░
     def longestOnes(self, nums: List[int], k: int) -> int:
         ans = left = cnt0 = 0
         for right, num in enumerate(nums):
