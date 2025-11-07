@@ -258,6 +258,21 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 2537 —— 统计好子数组的数目 ░░░░░░░░░░░
+    def countGood(self, nums: List[int], k: int) -> int:
+        cnt = defaultdict(int)
+        ans = left = pairs = 0
+        for x in nums:
+            pairs += cnt[x]
+            cnt[x] += 1
+            while pairs >= k:
+                cnt[nums[left]] -= 1
+                pairs -= cnt[nums[left]]
+                left += 1
+            ans += left
+        return ans
+
+    
     # ░░░░░░░░░░░ LeetCode 2799 —— 统计完全子数组的数目 ░░░░░░░░░░░
     def countCompleteSubarrays(self, nums: List[int]) -> int:
         k = len(set(nums))
