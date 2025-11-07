@@ -126,3 +126,55 @@ class HardTwoPointersSuite:
             ans += render(word[start:i])
 
         return ans
+
+
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 3259 —— 满足 K 约束的子字符串 II ░░░░░░░░░░░ ★★★★★
+    def countKConstraintSubstrings(self, s: str, k: int, queries: List[List[int]]) -> List[int]:
+        """
+        不定长滑窗 + 前缀和 + 二分（越短越合法法）
+
+        - 预处理：
+            left[i] = 以 i 结尾的最小合法左端点
+            pre[i+1] = 所有右端点 ≤ i 的合法子串数量（累加 i - left[i] + 1）
+        - 查询 [L,R]
+            若区间内所有 right 的 left[right] ≤ L，则每个 right 的有效左端点是 [L,right]
+            直接按长度求等差数列和
+            否则二分找到第一个 j 使 left[j] > L
+                * 对 right ∈ [j,R]：pre 里统计的子串起点都 > L，可用 pre 差分
+                * 对 right ∈ [L,j-1]：pre 混入了起点 < L 的子串，无法用 pre 直接扣，改成按长度
+                  (right-L+1) 累加，化成一段等差数列
+        """
+        n = len(s)
+        pre = [0] * (n + 1)
+        left = [0] * n
+        cnt = [0, 0]
+        l = 0
+
+        for i, x in enumerate(s):
+            cnt[ord(x) & 1] += 1
+            while cnt[0] > k and cnt[1] > k:
+                cnt[ord(s[l]) & 1] -= 1
+                l += 1
+            left[i] = l                       # 记录合法子串右端点 i 对应的最小左端点 l
+            pre[i + 1] = pre[i] + i - l + 1   # 以 i 结尾的合法子串个数做前缀和
+
+        ans = []
+        for L, R in queries:
+            lo, hi = L, R
+            # 在 [L, R] 上二分，找第一个满足 left[mid] > L 的位置 lo
+            while lo < hi:
+                mid = (lo + hi) // 2
+                if left[mid] > L:
+                    hi = mid
+                else:
+                    lo = mid + 1
+
+            if left[R] <= L:
+                # 区间内所有 right 的 left[right] <= L：直接等差数列
+                ans.append((R - L + 2) * (R - L + 1) // 2)
+            else:
+                # 把 right 拆成 [L, lo-1] 和 [lo, R] 两段：
+                #   [lo,R] 用 pre 差分；[L,lo-1] 用等差数列
+                ans.append(pre[R + 1] - pre[lo] + (lo - L) * (lo - L + 1) // 2)
+
+        return ans
