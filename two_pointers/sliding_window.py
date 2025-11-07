@@ -168,15 +168,17 @@ class SlidingWindowUtils:
         return ans
 
 
-
-class SubarrayCountWindowSuite:
-    """
-    § 越短越合法法  ans += right - left + 1
-
-    内层循环结束后，[left, right] 这个子数组是满足题目要求的. 由于子数组越短，越能满足题目要求，所以除了 [left, right]
-    还有 [left+1, right]，[left+2, right]，…，[right, right] 都是满足要求的. 也就是说，当右端点固定在 right 时，
-    左端点在 left, left+1, left+2, …, right 的所有子数组都是满足要求的，这一共有 right - left + 1 个
-    """
+    # ################################################################################
+    # § 越短越合法法（统计型滑动窗口）
+    #
+    # 模板结论：ans += right - left + 1
+    #
+    # 内层 while 收缩结束后，[left, right] 已经是当前“最左的合法窗口”
+    # 对于固定的 right，只要左端点在区间 left..right 之间：
+    #   [left..right], [left+1..right], ..., [right..right]
+    # 这些子数组都满足题目要求
+    # 因此，以 right 为右端点的合法子数组个数为 right - left + 1
+    # ################################################################################
     # ░░░░░░░░░░░ LeetCode 713 —— 乘积小于 K 的子数组 ░░░░░░░░░░░
     def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
         ans = left = 0
