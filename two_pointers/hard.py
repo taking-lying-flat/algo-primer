@@ -178,3 +178,41 @@ class HardTwoPointersSuite:
                 ans.append(pre[R + 1] - pre[lo] + (lo - L) * (lo - L + 1) // 2)
 
         return ans
+
+
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 3298 —— 统计重新排列后包含另一个字符串的子字符串数目 II ░░░░░░░░░░░ ★★★★★
+    def validSubstringCount(self, word1: str, word2: str) -> int:
+        """
+        不定长滑动窗口 + 计数
+
+        - 先用 cnt 统计 word2 中每个字符的需求量，kinds 为未满足的字符种数。
+        - 右指针 right 扩展 word1，进入一个字符就让 cnt[char]--，
+          当某类字符需求从 >0 变成 0 时，kinds--。
+        - 当 kinds == 0 时，说明当前窗口 [left,right] 已经覆盖了 word2 的所有需求，
+          继续右移 left，把窗口收缩成「最短覆盖」窗口：
+              收缩前若 cnt[word1[left]] == 0，则收缩后该类需求会重新变成 >0，
+              于是 kinds++，窗口不再覆盖 word2。
+        - 此时，对固定的 right，所有起点在 [0,left-1] 的子串都能覆盖 word2，
+          一共有 left 个，所以 ans += left。
+        """
+        if len(word1) < len(word2):
+            return 0
+
+        ans = left = 0
+        cnt = defaultdict(int)
+        for ch in word2:
+            cnt[ch] += 1
+        kinds = len(cnt)
+
+        for right, x in enumerate(word1):
+            cnt[x] -= 1
+            if cnt[x] == 0:
+                kinds -= 1
+            while kinds == 0:
+                if cnt[word1[left]] == 0:
+                    kinds += 1
+                cnt[word1[left]] += 1
+                left += 1
+            ans += left
+
+        return ans
