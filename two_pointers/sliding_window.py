@@ -258,6 +258,18 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 2495 —— 乘积为偶数的子数组数 ░░░░░░░░░░░
+    def evenProduct(self, nums: List[int]) -> int:
+        ans = left = even = 0
+        for x in nums:
+            even += (x & 1 == 0)          # 判断是否为偶数，比 % 2 略快
+            while even > 0:               # 窗口内已有偶数 -> 当前窗口对应的是「偶数乘积」子数组
+                even -= (nums[left] & 1 == 0)
+                left += 1
+            ans += left                   # 越长越合法
+        return ans
+
+
     # ░░░░░░░░░░░ LeetCode 2537 —— 统计好子数组的数目 ░░░░░░░░░░░
     def countGood(self, nums: List[int], k: int) -> int:
         cnt = defaultdict(int)
