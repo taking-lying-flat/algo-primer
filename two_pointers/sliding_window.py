@@ -228,3 +228,31 @@ class SlidingWindowUtils:
                 left += 1
             ans += right - left + 1
         return ans % 1_000_000_007
+
+    
+    # ################################################################################
+    # §2.3.2 越长越合法 统计型滑动窗口， 一般要写：ans += left
+    #
+    # 内层 while 收缩结束后，[left, right] 这个子数组（子串）已经“不满足题目要求”
+    # 但在退出循环前的最后一轮，区间 [left-1, right] 还是满足要求的
+    #
+    # 由于「越长越合法」，只要左端点往左扩，仍然合法：
+    #   [left-1, right], [left-2, right], ..., [0, right]
+    # 也就是说，当右端点固定在 right 时
+    # 所有左端点在 0, 1, 2, ..., left-1 的子数组都是合法的，一共有 left 个
+    # 重点：我们关心的是 left-1 的合法性，而不是当前的 left，所以统计答案时写 ans += left
+    # ################################################################################
+    # ░░░░░░░░░░░ LeetCode 1358 —— 包含所有三种字符的子字符串数目 ░░░░░░░░░░░
+    def numberOfSubstrings(self, s: str) -> int:
+        ans = left = 0
+        cnt = defaultdict(int)
+        for right, c in enumerate(s):
+            cnt[c] += 1
+            while len(cnt) == 3:
+                out = s[left]
+                cnt[out] -= 1
+                if cnt[out] == 0:
+                    del cnt[out]
+                left += 1
+            ans += left
+        return ans
