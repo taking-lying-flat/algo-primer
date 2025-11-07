@@ -258,6 +258,23 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 2799 —— 统计完全子数组的数目 ░░░░░░░░░░░
+    def countCompleteSubarrays(self, nums: List[int]) -> int:
+        k = len(set(nums))
+        cnt = defaultdict(int)  # 比 Counter() 快
+        ans = left = 0
+        for x in nums:
+            cnt[x] += 1
+            while len(cnt) == k:
+                out = nums[left]
+                cnt[out] -= 1
+                if cnt[out] == 0:
+                    del cnt[out]
+                left += 1
+            ans += left
+        return ans
+
+    
     # ░░░░░░░░░░░ LeetCode 2962 —— 统计最大元素至少出现 K 次的子数组 ░░░░░░░░░░░
     def countSubarrays(self, nums: List[int], k: int) -> int:
         mx = max(nums)
