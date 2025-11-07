@@ -2,7 +2,7 @@ class HardTwoPointersSuite:
     # ★★★★★ ░░░░░░░░░░░ LeetCode 76 · 最小覆盖子串 ░░░░░░░░░░░ ★★★★★
     def minWindow(self, s: str, t: str) -> str:
         """
-        类型：不定长滑动窗口（双指针）+ 计数
+        类型：不定长滑动窗口 + 计数
 
         不定长滑动窗口: 找包含 t 所有字符的最小子串
             1. 用哈希表 cnt 统计 t 中每个字符需要的数量
@@ -39,7 +39,7 @@ class HardTwoPointersSuite:
     # ★★★★★ ░░░░░░░░░░░ LeetCode 3134 · 找出唯一性数组的中位数 ░░░░░░░░░░░ ★★★★★
     def medianOfUniquenessArray(self, nums: List[int]) -> int:
         """
-        类型：二分答案 + 不定长滑动窗口（双指针）
+        类型：二分答案 + 不定长滑动窗口
 
         核心思路（离线 + 二分答案）：
             1. 记 total = n*(n+1)/2，为子数组总数, 中位数对应的排名是 k = (total + 1) // 2
@@ -131,7 +131,7 @@ class HardTwoPointersSuite:
     # ★★★★★ ░░░░░░░░░░░ LeetCode 3259 —— 满足 K 约束的子字符串 II ░░░░░░░░░░░ ★★★★★
     def countKConstraintSubstrings(self, s: str, k: int, queries: List[List[int]]) -> List[int]:
         """
-        不定长滑窗 + 前缀和 + 二分（越短越合法法）
+        不定长滑窗 + 前缀和 + 二分
 
         - 预处理：
             left[i] = 以 i 结尾的最小合法左端点
