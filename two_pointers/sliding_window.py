@@ -241,3 +241,21 @@ class SlidingWindowUtils:
             ans = max(ans, right - left + 1)
         
         return ans
+
+
+
+class SubarrayCountWindowSuite:
+    # ░░░░░░░░░░░ LeetCode 713 —— 乘积小于 K 的子数组 ░░░░░░░░░░░
+    @staticmethod
+    def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
+        ans = left = 0
+        prod = 1
+
+        for right, x in enumerate(nums):
+            prod *= x
+            while left <= right and prod >= k:
+                prod //= nums[left]
+                left += 1
+            ans += right - left + 1
+        
+        return ans
