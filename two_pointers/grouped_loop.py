@@ -35,3 +35,32 @@ class GroupedLoopSuite:
             # 从 start 到 i-1 是满足题目要求的（并且无法再延长的）子数组
             ans = max(ans, i - start)
         return ans
+
+
+    # ░░░░░░░░░░░ LeetCode 2953 —— 统计完全子字符串 ░░░░░░░░░░░
+    @staticmethod
+    def countCompleteSubstrings(word: str, k: int) -> int:
+        def render(s: str) -> int:
+            res = 0
+            for m in range(1, 27):
+                if m * k > len(s):
+                    break
+                cnt = defaultdict(int)
+                for right, c in enumerate(s):
+                    cnt[c] += 1
+                    left = right - m * k + 1
+                    if left >= 0:
+                        res += all(x == 0 or x == k for x in cnt.values())
+                        cnt[s[left]] -= 1
+            return res
+        
+        ans = i = 0
+        n = len(word)
+        while i < n:
+            start = i
+            i += 1
+            while i < n and abs(ord(word[i]) - ord(word[i - 1])) <= 2:
+                i += 1
+            ans += render(word[start:i])
+        
+        return ans
