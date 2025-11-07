@@ -83,3 +83,46 @@ class HardTwoPointersSuite:
             else:
                 left = pivot + 1
         return left
+
+
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 2953 —— 统计完全子字符串 ░░░░░░░░░░░ ★★★★★
+    def countCompleteSubstrings(self, word: str, k: int) -> int:
+        """
+        类型：分组循环 + 定长滑动窗口
+
+        思路概要：
+            1. 若相邻字符的 ASCII 差值 > 2，则不可能出现在同一个「完全子字符串」中
+               因此按 |word[i] - word[i-1]| <= 2 把原串切成若干独立段
+            2. 对每一段 s 单独处理：枚举不同字符种数 m = 1..26
+               此时完全子串长度固定为 L = m * k
+            3. 在 s 上用定长滑动窗口长为 L
+                 - 右端点 right 扩展，cnt 统计每个字符出现次数
+                 - 当形成完整窗口（left >= 0）时，检查窗口是否满足
+                       所有字符出现次数要么为 0，要么为 k
+                   若满足则贡献 1；随后左端点字符离开窗口，更新 cnt
+            4. 累加所有分段的答案
+        """
+        def render(s: str) -> int:
+            res = 0
+            for m in range(1, 27):
+                if m * k > len(s):
+                    break
+                cnt = defaultdict(int)
+                for right, c in enumerate(s):
+                    cnt[c] += 1
+                    left = right - m * k + 1
+                    if left >= 0:
+                        res += all(x == 0 or x == k for x in cnt.values())
+                        cnt[s[left]] -= 1
+            return res
+
+        ans = i = 0
+        n = len(word)
+        while i < n:
+            start = i
+            i += 1
+            while i < n and abs(ord(word[i]) - ord(word[i - 1])) <= 2:
+                i += 1
+            ans += render(word[start:i])
+
+        return ans
