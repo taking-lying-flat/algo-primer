@@ -19,7 +19,7 @@ class SlidingWindowUtils:
         return ans
 
 
-    # ░░░░░░░░░░░ LeetCode 76 · 最小覆盖子串 ░░░░░░░░░░░
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 76 · 最小覆盖子串 ░░░░░░░░░░░ ★★★★★
     def minWindow(self, s: str, t: str) -> str:
         """
         不定长滑动窗口: 找包含 t 所有字符的最小子串
@@ -77,7 +77,6 @@ class SlidingWindowUtils:
     def totalFruit(self, fruits: List[int]) -> int:
         ans = left = 0
         cnt = defaultdict(int)
-
         for right, fruit in enumerate(fruits):
             cnt[fruit] += 1
             while len(cnt) > 2:
@@ -87,7 +86,6 @@ class SlidingWindowUtils:
                 if cnt[out] == 0:
                     del cnt[out]
             ans = max(ans, right - left + 1)
-        
         return ans
         
 
@@ -120,7 +118,6 @@ class SlidingWindowUtils:
     def minOperations(self, nums: List[int], x: int) -> int:
         ans, left, s = -1, 0, 0
         target = sum(nums) - x
-
         for right, x in enumerate(nums):
             s += x
             while left <= right and s > target:
@@ -128,7 +125,6 @@ class SlidingWindowUtils:
                 left += 1
             if s == target:
                 ans = max(ans, right - left + 1)
-        
         return -1 if ans < 0 else len(nums) - ans
 
 
@@ -136,7 +132,6 @@ class SlidingWindowUtils:
     def maximumUniqueSubarray(self, nums: List[int]) -> int:
         ans = s = left = 0
         cnt = defaultdict(int)
-
         for right, x in enumerate(nums):
             s += x
             cnt[x] += 1
@@ -145,7 +140,6 @@ class SlidingWindowUtils:
                 s -= nums[left]
                 left += 1
             ans = max(ans, s)
-        
         return ans
 
 
@@ -153,14 +147,12 @@ class SlidingWindowUtils:
     def maxConsecutiveAnswers(self, answerKey: str, k: int) -> int:
         ans = left = 0
         cnt = defaultdict(int)
-
         for right, key in enumerate(answerKey):
             cnt[key] += 1
             while cnt['T'] > k and cnt['F'] > k:
                 cnt[answerKey[left]] -= 1
                 left += 1
             ans = max(ans, right - left + 1)
-        
         return ans
 
 
@@ -170,14 +162,12 @@ class SlidingWindowUtils:
         cnt = Counter(s)
         if any(cnt[c] < k for c in "abc"):
             return -1
-
         for right, c in enumerate(s):
             cnt[c] -= 1
             while cnt[c] < k:
                 cnt[s[left]] += 1
                 left += 1
             ans = max(ans, right - left + 1)
-        
         return len(s) - ans
 
 
@@ -185,14 +175,12 @@ class SlidingWindowUtils:
     def maxSubarrayLength(self, nums: List[int], k: int) -> int:
         ans = left = 0
         cnt = defaultdict(int)
-
         for right, x in enumerate(nums):
             cnt[x] += 1
             while cnt[x] > k:
                 cnt[nums[left]] -= 1
                 left += 1
             ans = max(ans, right - left + 1)
-        
         return ans
 
     
@@ -212,21 +200,17 @@ class SlidingWindowUtils:
         ans = left = 0
         cnt = defaultdict(int)
         seen = set()
-
         for right, x in enumerate(nums):
             cnt[x] += 1
             if cnt[x] > 1:
                 seen.add(x)
-            
             while len(seen) > k:
                 out = nums[left]
                 cnt[out] -= 1
                 if cnt[out] == 1:
                     seen.remove(out)
                 left += 1
-            
             ans = max(ans, right - left + 1)
-        
         return ans
 
 
@@ -243,28 +227,24 @@ class SubarrayCountWindowSuite:
     def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
         ans = left = 0
         prod = 1
-
         for right, x in enumerate(nums):
             prod *= x
             while left <= right and prod >= k:
                 prod //= nums[left]
                 left += 1
             ans += right - left + 1
-        
         return ans
 
     
     # ░░░░░░░░░░░ LeetCode 2302 —— 统计得分小于 K 的子数组数目 ░░░░░░░░░░░
     def countSubarrays(self, nums: List[int], k: int) -> int:
         ans = left = s = 0
-
         for right, x in enumerate(nums):
             s += x
             while (right - left + 1) * s >= k:
                 s -= nums[left]
                 left += 1
             ans += (right - left + 1)
-        
         return ans
 
 
@@ -272,14 +252,12 @@ class SubarrayCountWindowSuite:
     def countKConstraintSubstrings(self, s: str, k: int) -> int:
         ans = left = 0
         cnt = [0, 0]
-
         for right, c in enumerate(s):
             cnt[ord(c) & 1] += 1
             while cnt[0] > k and cnt[1] > k:
                 cnt[ord(s[left]) & 1] -= 1
                 left += 1
             ans += right - left + 1
-
         return ans
 
 
@@ -287,12 +265,10 @@ class SubarrayCountWindowSuite:
     def beautifulBouquet(self, flowers: List[int], cnt: int) -> int:
         ans = left = 0
         c = defaultdict(int)
-
         for right, x in enumerate(flowers):
             c[x] += 1
             while c[x] > cnt:
                 c[flowers[left]] -= 1
                 left += 1
             ans += right - left + 1
-
         return ans % 1_000_000_007
