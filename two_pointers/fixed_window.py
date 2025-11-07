@@ -38,7 +38,7 @@ def fixed_window_template(nums: List[int], k: int) -> Any:
     return ans
 
 
-class FixedWindowSuite:
+class FixedSlidingWindowSuite::
     # ░░░░░░░░░░░ LeetCode 643 —— 子数组最大平均数 I ░░░░░░░░░░░
     @staticmethod
     def findMaxAverage(self, nums: List[int], k: int) -> float:
