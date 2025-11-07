@@ -283,3 +283,19 @@ class SubarrayCountWindowSuite:
             ans += (right - left + 1)
         
         return ans
+
+
+    # ░░░░░░░░░░░ LeetCode 3258 —— 满足 K 约束的子字符串 I ░░░░░░░░░░░
+    @staticmethod
+    def countKConstraintSubstrings(s: str, k: int) -> int:
+        ans = left = 0
+        cnt = [0, 0]
+
+        for right, c in enumerate(s):
+            cnt[ord(c) & 1] += 1
+            while cnt[0] > k and cnt[1] > k:
+                cnt[ord(s[left]) & 1] -= 1
+                left += 1
+            ans += right - left + 1
+
+        return ans
