@@ -1,7 +1,6 @@
 class SlidingWindowUtils:
     # ░░░░░░░░░░░ LeetCode 3 —— 无重复字符的最长子串 ░░░░░░░░░░░
-    @staticmethod
-    def lengthOfLongestSubstring(s: str) -> int:
+    def lengthOfLongestSubstring(self, s: str) -> int:
         """
         不定长滑动窗口: 返回无重复字符的最长子串长度
             1. 使用滑动窗口维护一个无重复字符的子串
@@ -21,8 +20,7 @@ class SlidingWindowUtils:
 
 
     # ░░░░░░░░░░░ LeetCode 76 · 最小覆盖子串 ░░░░░░░░░░░
-    @staticmethod
-    def minWindow(s: str, t: str) -> str:
+    def minWindow(self, s: str, t: str) -> str:
         """
         不定长滑动窗口: 找包含 t 所有字符的最小子串
             1. 使用计数器记录目标串 t 中每个字符的需求量
@@ -54,8 +52,7 @@ class SlidingWindowUtils:
 
     
     # ░░░░░░░░░░░ LeetCode 438 · 找到字符串中所有字母异位词 ░░░░░░░░░░░
-    @staticmethod
-    def findAnagrams(s: str, p: str) -> List[int]:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
         """
         定长滑动窗口: 返回字符串 s 中所有 p 的字母异位词起始索引
             1. 使用计数器记录目标串 p 中每个字符的需求量
@@ -77,8 +74,7 @@ class SlidingWindowUtils:
 
 
     # ░░░░░░░░░░░ LeetCode 904 —— 水果成篮 ░░░░░░░░░░░
-    @staticmethod
-    def totalFruit(fruits: List[int]) -> int:
+    def totalFruit(self, fruits: List[int]) -> int:
         ans = left = 0
         cnt = defaultdict(int)
 
@@ -96,8 +92,7 @@ class SlidingWindowUtils:
         
 
     # ░░░░░░░░░░░ LeetCode 1004 —— 最大连续1的个数 III ░░░░░░░░░░░
-    @staticmethod
-    def longestOnes(nums: List[int], k: int) -> int:
+    def longestOnes(self, nums: List[int], k: int) -> int:
         ans = left = cnt0 = 0
         for right, num in enumerate(nums):
             cnt0 += 1 - num
@@ -109,8 +104,7 @@ class SlidingWindowUtils:
 
 
     # ░░░░░░░░░░░ LeetCode 1208 —— 尽可能使字符串相等 ░░░░░░░░░░░
-    @staticmethod
-    def equalSubstring(s: str, t: str, maxCost: int) -> int:
+    def equalSubstring(self, s: str, t: str, maxCost: int) -> int:
         dist = [abs(ord(a) - ord(b)) for (a, b) in zip(s, t)]
         ans = left = s = 0
         for right, x in enumerate(dist):
@@ -123,8 +117,7 @@ class SlidingWindowUtils:
 
 
     # ░░░░░░░░░░░ LeetCode 1658 —— 将 x 减到 0 的最小操作数 ░░░░░░░░░░░
-    @staticmethod
-    def minOperations(nums: List[int], x: int) -> int:
+    def minOperations(self, nums: List[int], x: int) -> int:
         ans, left, s = -1, 0, 0
         target = sum(nums) - x
 
@@ -140,8 +133,7 @@ class SlidingWindowUtils:
 
 
     # ░░░░░░░░░░░ LeetCode 1695 —— 删除子数组的最大得分 ░░░░░░░░░░░
-    @staticmethod
-    def maximumUniqueSubarray(nums: List[int]) -> int:
+    def maximumUniqueSubarray(self, nums: List[int]) -> int:
         ans = s = left = 0
         cnt = defaultdict(int)
 
@@ -158,8 +150,7 @@ class SlidingWindowUtils:
 
 
     # ░░░░░░░░░░░ LeetCode 2024 —— 考试的最大困扰度 ░░░░░░░░░░░
-    @staticmethod
-    def maxConsecutiveAnswers(answerKey: str, k: int) -> int:
+    def maxConsecutiveAnswers(self, answerKey: str, k: int) -> int:
         ans = left = 0
         cnt = defaultdict(int)
 
@@ -174,8 +165,7 @@ class SlidingWindowUtils:
 
 
     # ░░░░░░░░░░░ LeetCode 2516 —— 每种字符至少取 K 个 ░░░░░░░░░░░
-    @staticmethod
-    def takeCharacters(s: str, k: int) -> int:
+    def takeCharacters(self, s: str, k: int) -> int:
         ans = left = 0
         cnt = Counter(s)
         if any(cnt[c] < k for c in "abc"):
@@ -192,8 +182,7 @@ class SlidingWindowUtils:
 
 
     # ░░░░░░░░░░░ LeetCode 2958 —— 最多 K 次重复元素的子数组 ░░░░░░░░░░░
-    @staticmethod
-    def maxSubarrayLength(nums: List[int], k: int) -> int:
+    def maxSubarrayLength(self, nums: List[int], k: int) -> int:
         ans = left = 0
         cnt = defaultdict(int)
 
@@ -208,8 +197,7 @@ class SlidingWindowUtils:
 
     
     # ░░░░░░░░░░░ LeetCode 3634 —— 使数组平衡的最少移除数目 ░░░░░░░░░░░
-    @staticmethod
-    def minRemoval(nums: List[int], k: int) -> int:
+    def minRemoval(self, nums: List[int], k: int) -> int:
         nums.sort()
         max_save = left = 0
         for right, num in enumerate(nums):
@@ -220,8 +208,7 @@ class SlidingWindowUtils:
 
     
     # ░░░░░░░░░░░ LeetCode 3641 —— 最长半重复子数组 ░░░░░░░░░░░
-    @staticmethod
-    def longestSubarray(nums: List[int], k: int) -> int:
+    def longestSubarray(self, nums: List[int], k: int) -> int:
         ans = left = 0
         cnt = defaultdict(int)
         seen = set()
@@ -253,8 +240,7 @@ class SubarrayCountWindowSuite:
     左端点在 left, left+1, left+2, …, right 的所有子数组都是满足要求的，这一共有 right - left + 1 个
     """
     # ░░░░░░░░░░░ LeetCode 713 —— 乘积小于 K 的子数组 ░░░░░░░░░░░
-    @staticmethod
-    def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
+    def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
         ans = left = 0
         prod = 1
 
@@ -269,8 +255,7 @@ class SubarrayCountWindowSuite:
 
     
     # ░░░░░░░░░░░ LeetCode 2302 —— 统计得分小于 K 的子数组数目 ░░░░░░░░░░░
-    @staticmethod
-    def countSubarrays(nums: List[int], k: int) -> int:
+    def countSubarrays(self, nums: List[int], k: int) -> int:
         ans = left = s = 0
 
         for right, x in enumerate(nums):
@@ -284,8 +269,7 @@ class SubarrayCountWindowSuite:
 
 
     # ░░░░░░░░░░░ LeetCode 3258 —— 满足 K 约束的子字符串 I ░░░░░░░░░░░
-    @staticmethod
-    def countKConstraintSubstrings(s: str, k: int) -> int:
+    def countKConstraintSubstrings(self, s: str, k: int) -> int:
         ans = left = 0
         cnt = [0, 0]
 
@@ -300,8 +284,7 @@ class SubarrayCountWindowSuite:
 
 
     # ░░░░░░░░░░░ LCP 68 —— 美观的花束 ░░░░░░░░░░░
-    @staticmethod
-    def beautifulBouquet(flowers: List[int], cnt: int) -> int:
+    def beautifulBouquet(self, flowers: List[int], cnt: int) -> int:
         ans = left = 0
         c = defaultdict(int)
 
