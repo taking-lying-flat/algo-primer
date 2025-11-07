@@ -28,6 +28,37 @@ class QueueAlgoUtils:
                 ans.append(nums[mono_q[0]])
         return ans
 
+    
+    # ░░░░░░░░░░░ LeetCode 2762 —— 不间断子数组 ░░░░░░░░░░░
+    @staticmethod
+    def continuousSubarrays(nums: List[int]) -> int:
+        min_q = deque()
+        max_q = deque()
+        ans = left = 0
+
+        for right, x in enumerate(nums):
+            # 更新 min_q：维护递增
+            while len(min_q) and x <= nums[min_q[-1]]:
+                min_q.pop()
+            min_q.append(right)
+            
+            # 更新 max_q：维护递减
+            while len(max_q) and x >= nums[max_q[-1]]:
+                max_q.pop()
+            max_q.append(right)
+
+            while nums[max_q[0]] - nums[min_q[0]] > 2:
+                left += 1
+                # 右移 left 后，原来在窗口最左侧之前的下标已经不在窗口中
+                if min_q[0] < left:
+                    min_q.popleft()
+                if max_q[0] < left:
+                    max_q.popleft()
+            ans += right - left + 1
+        
+        return ans
+
+    
     # ░░░░░░░░░░░░░░ AcWing 4 进阶 —— 多重背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_multiple_queue(
