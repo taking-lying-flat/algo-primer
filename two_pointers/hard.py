@@ -260,3 +260,52 @@ class HardTwoPointersSuite:
             ans += left2 - left1
 
         return ans
+
+
+
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 3306 —— 3306. 元音辅音字符串计数 II ░░░░░░░░░░░ ★★★★★
+    def countOfSubstrings(self, word: str, k: int) -> int:
+        """
+        恰好型滑动窗口：恰好 k 个辅音 + 包含全部 5 个元音（a,e,i,o,u）
+
+        利用恒等式：
+            exact(k) = at_least(k) - at_least(k + 1)
+
+        其中 at_least(limit) 统计：
+            「辅音数 ≥ limit 且 已经包含全部 5 个元音」的子串个数。
+
+        对 fixed right：
+            当窗口满足 (consonants ≥ limit 且 kinds == 5) 时，收缩 left，
+            收缩结束后的 left 即合法左端点个数（越长越合法），累加 ans += left。
+        """
+        vowel = set("aeiou")
+
+        def at_least(limit: int) -> int:
+            ans = 0
+            left = 0
+            consonants = 0
+            v_cnt = defaultdict(int)
+            kinds = 0
+
+            for right, x in enumerate(word):
+                if x in vowel:
+                    if v_cnt[x] == 0:
+                        kinds += 1
+                    v_cnt[x] += 1
+                else:
+                    consonants += 1
+
+                while consonants >= limit and kinds == 5:
+                    out = word[left]
+                    if out in vowel:
+                        v_cnt[out] -= 1
+                        if v_cnt[out] == 0:
+                            kinds -= 1
+                    else:
+                        consonants -= 1
+                    left += 1
+
+                ans += left
+            return ans
+        
+        return at_least(k) - at_least(k + 1)
