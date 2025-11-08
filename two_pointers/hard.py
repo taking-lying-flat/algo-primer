@@ -223,3 +223,40 @@ class HardTwoPointersSuite:
                 left += 1
             ans += left
         return ans
+
+
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 992 —— K 个不同整数的子数组 ░░░░░░░░░░░ ★★★★★
+    def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
+        """
+        恰好型滑动窗口
+
+        核心：恰好 K = 至多 K − 至多 (K−1)
+          - cnt1 / left1 维护「至多 K」的窗口：当种类数 > K 时收缩。
+          - cnt2 / left2 维护「至多 K−1」的窗口：当种类数 ≥ K 时收缩。
+          - 对固定 right，合法子数组个数为 left2 - left1，累加到 ans。
+        """
+        ans = left1 = left2 = 0
+        cnt1 = defaultdict(int)
+        cnt2 = defaultdict(int)
+
+        for right, x in enumerate(nums):
+            cnt1[x] += 1
+            cnt2[x] += 1
+
+            while left1 <= right and len(cnt1) > k:
+                out = nums[left1]
+                cnt1[out] -= 1
+                if cnt1[out] == 0:
+                    del cnt1[out]
+                left1 += 1
+            
+            while left2 <= right and len(cnt2) >= k:
+                out = nums[left2]
+                cnt2[out] -= 1
+                if cnt2[out] == 0:
+                    del cnt2[out]
+                left2 += 1
+            
+            ans += left2 - left1
+
+        return ans
