@@ -315,3 +315,42 @@ class SlidingWindowUtils:
                 left += 1
             ans += left
         return ans
+
+
+    # ################################################################################
+    # 恰好型滑动窗口（exact = at_least(A) - at_least(B)）
+    #
+    # 目标：统计某个量「恰好等于 K」的子数组数目。
+    #
+    # 思路：
+    #   - 把「恰好 == K」拆成两个「至少」：
+    #         count(sum == K) = count(sum >= K) - count(sum >= K + 1)
+    #     或者拆成两个「至多」：
+    #         count(sum == K) = count(sum <= K) - count(sum <= K - 1)
+    #   - 这样就把一个“恰好型”问题，变成两个标准的“越长越合法”/“越短越合法”滑动窗口，
+    #     通常可以封装成一个函数 solve(limit)，最后做差：
+    #         return solve(K) - solve(K + 1)   # 或  solve_leq(K) - solve_leq(K - 1)
+    #
+    # 进阶：
+    #   - 也可以在一趟循环里维护同一个 right 和两个 left（比如 left1, left2），
+    #     同时完成 ≥K 和 ≥K+1（或 ≤K 和 ≤K-1）的统计，减少常数开销。
+    # ################################################################################
+    # ░░░░░░░░░░░ LeetCode 930 —— 和相同的二元子数组 ░░░░░░░░░░░
+    def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
+        ans = 0
+        sum1 = sum2 = 0      # sum1: 当前子数组和 ≤ goal；sum2: 当前子数组和 < goal
+        left1 = left2 = 0    # 对应两个「至少」窗口的左端点
+        for right, x in enumerate(nums):
+            sum1 += x
+            sum2 += x
+            # 收缩到「子数组和 ≤ goal」的最左窗口
+            while sum1 > goal:
+                sum1 -= nums[left1]
+                left1 += 1
+            # 收缩到「子数组和 < goal」（即 ≤ goal-1）的最左窗口
+            while sum2 >= goal:
+                sum2 -= nums[left2]
+                left2 += 1
+            # 恰好型：sub(sum == goal) = sub(sum ≤ goal) - sub(sum ≤ goal-1)
+            ans += left2 - left1
+        return ans
