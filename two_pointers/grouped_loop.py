@@ -30,7 +30,21 @@ class GroupedLoopSuite:
             ans += (i - start + 1) * (i - start) // 2
         return ans % 1_000_000_007
         
-  
+
+    # ░░░░░░░░░░░ LeetCode 1869 —— 哪种连续子字符串更长 ░░░░░░░░░░░
+    def checkZeroOnes(self, s: str) -> bool:
+        i = 0
+        cnt = [0, 0]
+        while i < len(s):
+            start = i
+            i += 1
+            while i < len(s) and s[i] == s[i - 1]:
+                i += 1
+            offset = ord(s[start]) - ord('0')
+            cnt[offset] = max(cnt[offset], i - start)
+        return cnt[1] > cnt[0]
+
+    
     # ░░░░░░░░░░░ LeetCode 2760 —— 带阈值的最长偶奇子数组 ░░░░░░░░░░░
     def longestAlternatingSubarray(self, nums: List[int], threshold: int) -> int:
         n = len(nums)
