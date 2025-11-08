@@ -354,3 +354,20 @@ class SlidingWindowUtils:
             # 恰好型：sub(sum == goal) = sub(sum ≤ goal) - sub(sum ≤ goal-1)
             ans += left2 - left1
         return ans
+
+
+    # ░░░░░░░░░░░ LeetCode 1248 —— 统计「优美子数组」 ░░░░░░░░░░░
+    def numberOfSubarrays(self, nums: List[int], k: int) -> int:
+        ans = left1 = left2 = 0
+        odd1 = odd2 = 0
+        for right, x in enumerate(nums):
+            odd1 += x & 1
+            odd2 += x & 1
+            while left1 <= right and odd1 > k:
+                odd1 -= nums[left1] & 1
+                left1 += 1
+            while left2 <= right and odd2 >= k:
+                odd2 -= nums[left2] & 1
+                left2 += 1
+            ans += left2 - left1
+        return ans
