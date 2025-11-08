@@ -15,6 +15,21 @@ class GroupedLoopSuite:
             ans.append(render(start, i - 1))
         return ans
 
+
+    # ░░░░░░░░░░░ LeetCode 1513 —— 仅含 1 的子串数 ░░░░░░░░░░░
+    def numSub(self, s: str) -> int:
+        ans = i = 0
+        while i < len(s):
+            if s[i] == '0':
+                i += 1
+                continue
+            start = i
+            i += 1
+            while i < len(s) and s[i] == '1':
+                i += 1
+            ans += (i - start + 1) * (i - start) // 2
+        return ans % 1_000_000_007
+        
   
     # ░░░░░░░░░░░ LeetCode 2760 —— 带阈值的最长偶奇子数组 ░░░░░░░░░░░
     def longestAlternatingSubarray(self, nums: List[int], threshold: int) -> int:
