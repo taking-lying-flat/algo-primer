@@ -12,7 +12,7 @@ class SlidingWindowUtils:
         return ans
 
     
-    # ░░░░░░░░░░░ LeetCode 438 · 找到字符串中所有字母异位词 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 438 —— 找到字符串中所有字母异位词 ░░░░░░░░░░░
     def findAnagrams(self, s: str, p: str) -> List[int]:
         ans = []
         left = 0
