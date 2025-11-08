@@ -110,6 +110,18 @@ class SlidingWindowUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 2401 —— 最长优雅子数组 ░░░░░░░░░░░
+    def longestNiceSubarray(self, nums: List[int]) -> int:
+        ans = left = or_ = 0
+        for right, x in enumerate(nums):
+            while or_ & x:  # 有交集
+                or_ ^= nums[left]  # 从 or_ 中去掉集合 nums[left]
+                left += 1
+            or_ |= x  # 把集合 x 并入 or_ 中
+            ans = max(ans, right - left + 1)
+        return ans
+
+
     # ░░░░░░░░░░░ LeetCode 2516 —— 每种字符至少取 K 个 ░░░░░░░░░░░
     def takeCharacters(self, s: str, k: int) -> int:
         ans = left = 0
