@@ -1,36 +1,3 @@
-class BacktrackingToolkit:
-    # ░░░░░░░░░░░ LeetCode 79 —— 单词搜索 ░░░░░░░░░░░
-    @staticmethod
-    def exist(board: List[List[str]], word: str) -> bool:
-        """
-        在二维网格中搜索单词
-            1. 优化一：检查字符频率是否满足要求
-            2. 优化二：从出现次数少的一端开始搜索
-            3. DFS + 回溯：标记访问过的格子
-            4. 恢复现场：回溯时恢复原始值
-            5. 剪枝：不匹配立即返回
-        """
-        cnt = Counter(c for row in board for c in row)
-        if not cnt >= Counter(word):
-            return False
-        if cnt[word[-1]] < cnt[word[0]]:
-            word = word[::-1]
-
-        m, n = len(board), len(board[0])
-        
-        def dfs(i: int, j: int, k: int) -> bool:
-            if board[i][j] != word[k]:  # 匹配失败
-                return False
-            if k == len(word) - 1:      # 匹配成功, 处理单字符情况
-                return True
-            board[i][j] = ''            # 标记访问过
-            for x, y in (i, j - 1), (i, j + 1), (i - 1, j), (i + 1, j):  # 相邻格子
-                if 0 <= x < m and 0 <= y < n and dfs(x, y, k + 1):
-                    return True  # 搜到了！
-            board[i][j] = word[k]  # 恢复现场
-            return False  # 没搜到
-            
-        return any(dfs(i, j, 0) for i in range(m) for j in range(n))
 
     # ░░░░░░░░░░░ LeetCode 212 —— 单词搜索 II ░░░░░░░░░░░
     @staticmethod
@@ -72,42 +39,6 @@ class BacktrackingToolkit:
                 dfs(trie, i, j)
         
         return list(ans)
-
-
-    # ░░░░░░░░░░░░░░ LeetCode 51 —— N 皇后 ░░░░░░░░░░░░░░
-    @staticmethod
-    def solveNQueens(n: int) -> List[List[str]]:
-        """
-        N 皇后问题 - 经典回溯算法
-            1. 逐行放置：每行必须且只能放一个皇后
-            2. 剪枝条件：检查列和两条对角线是否被占用
-            3. 对角线规律：
-               - 主对角线(↘)：r + c 相同
-               - 副对角线(↙)：r - c 相同（加偏移避免负数）
-            4. 状态记录：用布尔数组记录占用情况，避免重复计算
-        """
-        ans = []
-        board = [['.' for _ in range(n)] for _ in range(n)]
-        col = [False] * n
-        diag1 = [False] * (n * 2 - 1)
-        diag2 = [False] * (n * 2 - 1)
-
-        def dfs(r: int):
-            if r == n:
-                ans.append([''.join(row) for row in board])
-                return
-            
-            # 在 (r,c) 放皇后
-            for c, ok in enumerate(col):
-                if not ok and not diag1[r + c] and not diag2[r - c]:   # 判断能否放皇后
-                    board[r][c] = 'Q'
-                    col[c] = diag1[r + c] = diag2[r - c] = True        # 皇后占用了 c 列和两条斜线
-                    dfs(r + 1)
-                    board[r][c] = '.'
-                    col[c] = diag1[r + c] = diag2[r - c] = False       # 恢复现场
-        
-        dfs(0)
-        return ans
 
 
 class GridGraphToolKit:
