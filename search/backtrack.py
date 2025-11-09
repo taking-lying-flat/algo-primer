@@ -196,3 +196,88 @@ class BacktrackingToolkit:
                 chosen.pop()
         dfs(0)
         return ans
+
+
+# ░░░░░░░░░░░ LeetCode 131 —— 分割回文串 ░░░░░░░░░░░
+    @staticmethod
+    def partition(s: str) -> List[List[str]]:
+        """
+        将字符串分割成若干回文子串
+            1. 回溯框架：枚举每个分割位置
+            2. 选择空间：从当前位置到字符串末尾的所有子串
+            3. 剪枝条件：只有回文串才继续递归
+            4. 终止条件：指针到达字符串末尾
+            5. 回溯恢复：path.pop() 撤销选择
+        """
+        n = len(s)
+        ans = []
+        path = []
+    
+        def dfs(i: int) -> None:
+            if i == n:                    # 分割完毕
+                ans.append(path.copy())   # 必须复制！
+                return
+            
+            for j in range(i, n):         # 枚举分割位置
+                t = s[i:j+1]              # 候选子串
+                if t == t[::-1]:          # 是回文串
+                    path.append(t)        # 做出选择
+                    dfs(j + 1)            # 递归剩余部分
+                    path.pop()            # 撤销选择
+        
+        dfs(0)
+        return ans
+
+    # ░░░░░░░░░░░░░░ LeetCode 39 —— 组合总和 ░░░░░░░░░░░░░░
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+       candidates.sort()
+       ans: List[List[int]] = []
+       path: List[int] = []
+       def dfs(u: int, left: int) -> None:
+           if left == 0:
+               ans.append(path.copy())
+               return
+           if u == len(candidates) or left < candidates[u]:
+               return
+           dfs(u + 1, left)
+           path.append(candidates[u])
+           dfs(u, left - candidates[u])
+           path.pop()
+       dfs(0, target)
+       return ans
+
+    
+    # ░░░░░░░░░░░░░░ LeetCode 51 —— N 皇后 ░░░░░░░░░░░░░░
+    @staticmethod
+    def solveNQueens(n: int) -> List[List[str]]:
+        """
+        N 皇后问题 - 经典回溯算法
+            1. 逐行放置：每行必须且只能放一个皇后
+            2. 剪枝条件：检查列和两条对角线是否被占用
+            3. 对角线规律：
+               - 主对角线(↘)：r + c 相同
+               - 副对角线(↙)：r - c 相同（加偏移避免负数）
+            4. 状态记录：用布尔数组记录占用情况，避免重复计算
+        """
+        ans = []
+        board = [['.' for _ in range(n)] for _ in range(n)]
+        col = [False] * n
+        diag1 = [False] * (n * 2 - 1)
+        diag2 = [False] * (n * 2 - 1)
+
+        def dfs(r: int):
+            if r == n:
+                ans.append([''.join(row) for row in board])
+                return
+            
+            # 在 (r,c) 放皇后
+            for c, ok in enumerate(col):
+                if not ok and not diag1[r + c] and not diag2[r - c]:   # 判断能否放皇后
+                    board[r][c] = 'Q'
+                    col[c] = diag1[r + c] = diag2[r - c] = True        # 皇后占用了 c 列和两条斜线
+                    dfs(r + 1)
+                    board[r][c] = '.'
+                    col[c] = diag1[r + c] = diag2[r - c] = False       # 恢复现场
+        
+        dfs(0)
+        return ans
