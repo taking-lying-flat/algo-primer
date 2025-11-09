@@ -1,7 +1,6 @@
 class BacktrackingToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░
-    @staticmethod
-    def subsets(nums: List[int]) -> List[List[int]]:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
         n = len(nums)
         subsets = []
         path = []
@@ -15,10 +14,10 @@ class BacktrackingToolkit:
             path.pop()
         dfs(0)
         return subsets
+
     
     # ░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░
-    @staticmethod
-    def subsets_bitmask(nums: List[int]) -> List[List[int]]:
+    def subsets_bitmask(self, nums: List[int]) -> List[List[int]]:
         n = len(nums)
         subsets = []
         def dfs(u: int, mask: int) -> None:
@@ -34,9 +33,9 @@ class BacktrackingToolkit:
         dfs(0, 0)
         return subsets
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 90 · 子集 II ░░░░░░░░░░░░░░
-    @staticmethod
-    def subsetsWithDup(nums: List[int]) -> List[List[int]]:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
         n = len(nums)
         on_path = []
@@ -49,20 +48,19 @@ class BacktrackingToolkit:
             on_path.append(x)
             dfs(u + 1)
             on_path.pop()
-
             # 不选 x，那么后面所有等于 x 的数都不选
             # 如果不跳过这些数，会导致「选 x 不选 x'」和「不选 x 选 x'」这两种情况都会加到 ans 中
             u += 1
             while u < n and nums[u] == x:
                 u += 1
             dfs(u)
-        
         dfs(0)
         return ans
+
     
     # ░░░░░░░░░░░░░░ LeetCode 46 · 全排列 ░░░░░░░░░░░░░░
     @staticmethod
-    def permute(nums: List[int]) -> List[List[int]]:
+    def permute(self, nums: List[int]) -> List[List[int]]:
         n = len(nums)
         result = []
         path = []
@@ -80,10 +78,10 @@ class BacktrackingToolkit:
                     visited[i] = False      
         dfs(0)
         return result
+
     
     # ░░░░░░░░░░░░░░ LeetCode 46 · 全排列 ░░░░░░░░░░░░░░
-    @staticmethod
-    def permute_bitmask(nums: List[int]) -> List[List[int]]:
+    def permute_bitmask(self, nums: List[int]) -> List[List[int]]:
         n = len(nums)
         result = []
         path = []
@@ -99,9 +97,9 @@ class BacktrackingToolkit:
         dfs(0, 0)
         return result
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 47 · 全排列 II（有重复） ░░░░░░░░░░░░░░
-    @staticmethod
-    def permuteUnique(nums: List[int]) -> List[List[int]]:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         cnt = Counter(nums)
         n = len(nums)
         res: List[List[int]] = []
@@ -119,10 +117,10 @@ class BacktrackingToolkit:
                 cnt[x] += 1
         dfs(0)
         return res
+
     
     # ░░░░░░░░░░░░░░ LeetCode 77 · 组合 ░░░░░░░░░░░░░░
-    @staticmethod
-    def combine(n: int, k: int) -> List[List[int]]:
+    def combine(self, n: int, k: int) -> List[List[int]]:
         result: List[List[int]] = []
         path: List[int] = []
         def dfs(u: int, start: int) -> None:
@@ -137,10 +135,10 @@ class BacktrackingToolkit:
                 path.pop()
         dfs(0, 0)
         return result
+
     
     # ░░░░░░░░░░░░░░ LeetCode 77 · 组合 ░░░░░░░░░░░░░░
-    @staticmethod
-    def combine_bitmask(n: int, k: int) -> List[List[int]]:
+    def combine_bitmask(self, n: int, k: int) -> List[List[int]]:
         result: List[int] = []
         def dfs(u: int, cnt: int, mask: int) -> None:
             if cnt + n - u < k:
@@ -159,9 +157,9 @@ class BacktrackingToolkit:
         dfs(0, 0, 0)
         return result
 
+    
     # ░░░░░░░░░░░ LeetCode 22 —— 括号生成 ░░░░░░░░░░░
-    @staticmethod
-    def generateParenthesis(n: int) -> List[str]:
+    def generateParenthesis(self, n: int) -> List[str]:
         ans: List[str] = []
         chosen: List[str] = []
         def dfs(i: int, open_count: int) -> None:
@@ -179,9 +177,9 @@ class BacktrackingToolkit:
         dfs(0, 0)
         return ans
 
+    
     # ░░░░░░░░░░░ LeetCode 17 —— 电话号码的字母组合 ░░░░░░░░░░░
-    @staticmethod
-    def letterCombinations(digits: str) -> List[str]:
+    def letterCombinations(self, digits: str) -> List[str]:
         if not digits:
             return []
         MAPPING = "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
