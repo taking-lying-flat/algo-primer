@@ -1,5 +1,5 @@
 class GridSearchToolkit:
-    # ░░░░░░░░░░░░░░░░░░░ LeetCode 79 —— 单词搜索 ░░░░░░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 79 —— 单词搜索 ░░░░░░░░░░░░░░░░░░░░░░░░
     def exist(board: List[List[str]], word: str) -> bool:
         cnt = Counter(c for row in board for c in row)
         if not cnt >= Counter(word):
