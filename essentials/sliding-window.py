@@ -262,7 +262,7 @@ class HardTwoPointersSuite:
         return ans
 
 
-    # ★★★★★ ░░░░░░░░░░░ LeetCode 3306 —— 3306. 元音辅音字符串计数 II ░░░░░░░░░░░ ★★★★★
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 3306 —— 元音辅音字符串计数 II ░░░░░░░░░░░ ★★★★★
     def countOfSubstrings(self, word: str, k: int) -> int:
         """
         恰好型滑动窗口：恰好 k 个辅音 + 包含全部 5 个元音（a,e,i,o,u）
