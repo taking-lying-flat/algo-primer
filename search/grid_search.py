@@ -90,3 +90,28 @@ class GridSearchToolkit:
         pacific = [(0, i) for i in range(n)] + [(i, 0) for i in range(1, m)]
         atlantic = [(m - 1, i) for i in range(n - 1)] + [(i, n - 1) for i in range(m)]
         return list(map(list, bfs(pacific) & bfs(atlantic)))
+
+
+    # ░░░░░░░░░░░░░░░░░░░ LeetCode 695 —— 岛屿的最大面积 ░░░░░░░░░░░░░░░░░░░
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+
+        def bfs(i: int, j: int) -> int:
+            num_island = 0
+            q = deque([(i, j)])
+            grid[i][j] = 0
+            while len(q):
+                num_island += 1
+                x, y = q.popleft()
+                for dx, dy in (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1):
+                    if 0 <= dx < m and 0 <= dy < n and grid[dx][dy] == 1:
+                        grid[dx][dy] = 0
+                        q.append((dx, dy))
+            return num_island
+        
+        ans = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    ans = max(ans, bfs(i, j))
+        return ans
