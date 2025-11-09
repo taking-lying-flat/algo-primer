@@ -33,3 +33,56 @@ class SearchToolKit:
 
         dfs(0)
         return ans
+
+
+    # ★★★★★ ░░░░░░░░░░░░░░░░░░░░░ LeetCode 212 —— 单词搜索 II ░░░░░░░░░░░░░░░░░░░░░ ★★★★★
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        """
+        Trie + 网格 DFS 
+
+        思路小结
+            1. 先把所有 words 插入一棵 Trie，节点记录 children 和 word（若为某单词结尾）。
+            2. 从每个格子 (i,j) 出发做 DFS，路径上沿着 Trie 往下走：
+                 - 若当前字符不在 now.children 中，剪枝返回。
+                 - 若 now.word 不为空，说明找到一个完整单词，加入答案集合。
+            3. DFS 过程中用临时标记（比如 '#'）避免重复走回同一个格子，回溯时恢复。
+            4. 利用 Trie 共享前缀 + 网格剪枝，避免对每个单词单独在板上暴力搜索。
+        """
+        class Trie:
+            def __init__(self):
+                self.children = defaultdict(Trie)
+                self.word = None
+            
+            def insert(self, word: str) -> None:
+                node = self
+                for ch in word:
+                    node = node.children[ch]
+                node.word = word
+
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
+        
+        m, n = len(board), len(board[0])
+        ans = set()
+
+        def dfs(now: Trie, i: int, j: int) -> None:
+            if board[i][j] not in now.children:
+                return
+            ch = board[i][j]
+            now = now.children[ch]
+            nonlocal ans
+            if now.word is not None:
+                ans.add(now.word)
+            
+            board[i][j] = '#'
+            for di, dj in (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
+                if 0 <= di < m and 0 <= dj < n:
+                    dfs(now, di, dj)
+            board[i][j] = ch
+        
+        for i in range(m):
+            for j in range(n):
+                dfs(trie, i, j)
+        
+        return list(ans)
