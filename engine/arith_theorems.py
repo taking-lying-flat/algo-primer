@@ -25,7 +25,7 @@ def sieve_of_euler(n: int) -> List[int]:
 
 
 class CongruenceToolKit:
-    # ░░░░░░░░░░ LeetCode 1015 - 可被 K 整除的最小整数 (Smallest Integer Divisible by K) ░░░░░░░░░░
+    # ░░░░░░░░░░ LeetCode 1015 - 可被 K 整除的最小整数 ░░░░░░░░░░
     def smallestRepunitDivByK(k: int) -> int:
         """
         余数迭代 + 鸽巢原理
@@ -42,3 +42,13 @@ class CongruenceToolKit:
             r = (r * 10 + 1) % k
             length += 1
         return length
+
+
+    # ░░░░░░░░░░░ LeetCode 172 —— 阶乘后的零 ░░░░░░░░░░░
+    @staticmethod
+    def trailingZeroes(n: int) -> int:
+        ret = 0
+        while n:
+            ret += n // 5
+            n //= 5
+        return ret
