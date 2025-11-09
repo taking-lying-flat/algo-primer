@@ -115,3 +115,27 @@ class GridSearchToolkit:
                 if grid[i][j] == 1:
                     ans = max(ans, bfs(i, j))
         return ans
+
+
+    # ░░░░░░░░░░░░░░░░░░░ LeetCode 1162 —— 地图分析 ░░░░░░░░░░░░░░░░░░░
+    def maxDistance(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        dist = [[float('inf') for _ in range(n)] for _ in range(m)]
+        starts = []
+        for i, row in enumerate(grid):
+            for j, x in enumerate(row):
+                if x == 1:
+                    starts.append((i, j))
+                    dist[i][j] = 0
+        if not len(starts) or len(starts) == m * n:
+            return -1
+        q = deque(starts)
+        while len(q):
+            x, y = q.popleft()
+            grid[x][y] = 2
+            for dx, dy in (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1):
+                if 0 <= dx < m and 0 <= dy < n and grid[dx][dy] == 0:
+                    dist[dx][dy] = dist[x][y] + 1
+                    q.append((dx, dy))
+                    grid[dx][dy] = 2
+        return max(map(max, dist))
