@@ -73,68 +73,6 @@ class BacktrackingToolkit:
         
         return list(ans)
 
-    # ░░░░░░░░░░░ LeetCode 131 —— 分割回文串 ░░░░░░░░░░░
-    @staticmethod
-    def partition(s: str) -> List[List[str]]:
-        """
-        将字符串分割成若干回文子串
-            1. 回溯框架：枚举每个分割位置
-            2. 选择空间：从当前位置到字符串末尾的所有子串
-            3. 剪枝条件：只有回文串才继续递归
-            4. 终止条件：指针到达字符串末尾
-            5. 回溯恢复：path.pop() 撤销选择
-        """
-        n = len(s)
-        ans = []
-        path = []
-    
-        def dfs(i: int) -> None:
-            if i == n:                    # 分割完毕
-                ans.append(path.copy())   # 必须复制！
-                return
-            
-            for j in range(i, n):         # 枚举分割位置
-                t = s[i:j+1]              # 候选子串
-                if t == t[::-1]:          # 是回文串
-                    path.append(t)        # 做出选择
-                    dfs(j + 1)            # 递归剩余部分
-                    path.pop()            # 撤销选择
-        
-        dfs(0)
-        return ans
-
-    # ░░░░░░░░░░░░░░ LeetCode 39 —— 组合总和 ░░░░░░░░░░░░░░
-    @staticmethod
-    def combinationSum(candidates: List[int], target: int) -> List[List[int]]:
-       """
-       组合总和 - 完全背包问题
-           1. 每个数字可以无限制重复使用
-           2. 需要找出所有和为 target 的组合
-           3. 剪枝优化：排序后，如果当前数字已经大于剩余值，后面的数字更大，直接返回
-           4. 去重策略：先选小的再选大的，避免 [2,3] 和 [3,2] 的重复
-       """
-       candidates.sort()
-       ans: List[List[int]] = []
-       path: List[int] = []
-       
-       def dfs(u: int, left: int) -> None:
-           if left == 0:
-               ans.append(path.copy())
-               return
-           
-           if u == len(candidates) or left < candidates[u]:
-               return
-           
-           # 不选当前数字
-           dfs(u + 1, left)
-           
-           # 选当前数字（注意还是传 u，允许重复使用）
-           path.append(candidates[u])
-           dfs(u, left - candidates[u])
-           path.pop()
-       
-       dfs(0, target)
-       return ans
 
     # ░░░░░░░░░░░░░░ LeetCode 51 —— N 皇后 ░░░░░░░░░░░░░░
     @staticmethod
