@@ -1,4 +1,4 @@
-class HardTwoPointersSuite:
+class TwoPointersToolKit:
     # ★★★★★ ░░░░░░░░░░░ LeetCode 76 · 最小覆盖子串 ░░░░░░░░░░░ ★★★★★
     def minWindow(self, s: str, t: str) -> str:
         """
