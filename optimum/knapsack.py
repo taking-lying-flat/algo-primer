@@ -12,7 +12,7 @@ class KnapsackTemplates:
         #         return dfs(i - 1, c)
         #     return max(
         #         dfs(i - 1, c),                           # 不选
-        #         dfs(i - 1, c - weights[i]) + values[i],  # 选
+        #         dfs(i - 1, c - weights[i]) + values[i]   # 选
         #     )
         # return dfs(n - 1, capacity)
 
@@ -38,7 +38,7 @@ class KnapsackTemplates:
         #     # 可以选当前物品：选了之后 i 不变，允许重复选择
         #     return max(
         #         dfs(i - 1, c),                             # 不选
-        #         dfs(i, c - weights[i]) + values[i],        # 选
+        #         dfs(i, c - weights[i]) + values[i]         # 选
         #     )
         # return dfs(n - 1, capacity)
 
@@ -67,8 +67,8 @@ class KnapsackTemplates:
         #     if v_rem < volumes[i] or w_rem < weights[i]:
         #         return dfs(i - 1, v_rem, w_rem)  # 放不下当前物品，只能不选
         #     return max(
-        #         dfs(i - 1, v_rem, w_rem),                                   # 不选
-        #         dfs(i - 1, v_rem - volumes[i], w_rem - weights[i]) + values[i],  # 选
+        #         dfs(i - 1, v_rem, w_rem),                                       # 不选
+        #         dfs(i - 1, v_rem - volumes[i], w_rem - weights[i]) + values[i]  # 选
         #     )
         # return dfs(n - 1, max_volume, max_weight)
 
