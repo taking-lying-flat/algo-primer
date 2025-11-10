@@ -128,6 +128,31 @@ class KnapsackTemplates:
 
 
 class KnapsackApplications:
+    # ░░░░░░░░░░░░░░ LeetCode 416 —— 分割等和子集（0-1 背包 · 可行性） ░░░░░░░░░░░░░░
+    def canPartition(
+        self, nums: List[int]
+    ) -> bool:
+        # @cache
+        # def dfs(i: int, c: int) -> bool:
+        #     if i < 0:
+        #         return c == 0
+        #     if c < nums[i]:
+        #         return dfs(i - 1, c)
+        #     return dfs(i - 1, c) or dfs(i - 1, c - nums[i])
+        # s = sum(nums)
+        # return s % 2 == 0 and dfs(len(nums) - 1, s // 2)
+
+        s = sum(nums)
+        if s % 2:
+            return False
+        s //= 2
+        f = [True] + [False] * s
+        for x in nums:
+            for j in range(s, x - 1, -1):
+                f[j] = f[j] or f[j - x]
+        return f[s]
+
+    
     # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包 · 最少硬币数） ░░░░░░░░░░░░░░
     def coinChange(
         self, coins: List[int], amount: int
