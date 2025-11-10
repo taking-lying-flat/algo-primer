@@ -1,28 +1,27 @@
 class KnapsackTemplates:
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 0-1 背包 · 记忆化搜索 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def knapsack_01_memo(
-        self, weights: List[int], values: List[int], cap: int
+    def knapsack_01(
+        self, weights: List[int], values: List[int], capacity: int
     ) -> int:
-        n = len(weights)
-        @cache
-        def dfs(i: int, c: int) -> int:
-            if i < 0 or c <= 0:
-                return 0
-            not_take = dfs(i - 1, c)
-            if c >= weights[i]:
-                take = values[i] + dfs(i - 1, c - weights[i])
-                return max(take, not_take)
-            return not_take
-        return dfs(n - 1, cap)
+        # n = len(weights)
+        # @cache
+        # def dfs(i: int, c: int) -> int:
+        #     if i < 0 or c <= 0:
+        #         return 0
+        #     if c < weights[i]:  # 放不下当前物品，只能不选
+        #         return dfs(i - 1, c)
+        #     return max(
+        #         dfs(i - 1, c),                           # 不选
+        #         dfs(i - 1, c - weights[i]) + values[i],  # 选
+        #     )
+        #
+        # return dfs(n - 1, capacity)
 
-    
-    def knapsack_01_dp(
-        self, volumes: List[int], values: List[int], capacity: int
-    ) -> int:
         dp = [0] * (capacity + 1)
-        for vol, val in zip(volumes, values):
-            for j in range(capacity, vol - 1, -1):
-                dp[j] = max(dp[j], dp[j - vol] + val)
+        for w, val in zip(weights, values):
+            # 倒序枚举，保证每个物品只被用一次
+            for j in range(capacity, w - 1, -1):
+                dp[j] = max(dp[j], dp[j - w] + val)
         return dp[capacity]
 
     
