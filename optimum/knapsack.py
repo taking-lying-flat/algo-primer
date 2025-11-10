@@ -140,3 +140,25 @@ class KnapsackApplications:
             for j in range(coin, amount + 1):
                 f[j] = min(f[j], f[j - coin] + 1)
         return f[amount] if f[amount] < inf else -1
+
+
+ # ░░░░░░░░░░░░░░ LeetCode 518 —— 零钱兑换 II（完全背包 · 方案数） ░░░░░░░░░░░░░░
+    def change(
+        self, amount: int, coins: List[int]
+    ) -> int:
+        # n = len(coins)
+        # @cache
+        # def dfs(i: int, c: int) -> int:
+        #     if i < 0:
+        #         return 1 if c == 0 else 0
+        #     if c < coins[i]:  # 只能不选
+        #         return dfs(i - 1, c)
+        #     # 不选 + 继续选
+        #     return dfs(i - 1, c) + dfs(i, c - coins[i])
+        # return dfs(n - 1, amount)
+
+        f = [1] + [0] * amount
+        for coin in coins:
+            for c in range(coin, amount + 1):
+                f[c] += f[c - coin]
+        return f[amount]
