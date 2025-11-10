@@ -1,6 +1,6 @@
 class GridSearchToolkit:
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 79 —— 单词搜索 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def exist(board: List[List[str]], word: str) -> bool:
+    def exist(self, board: List[List[str]], word: str) -> bool:
         cnt = Counter(c for row in board for c in row)
         if not cnt >= Counter(word):
             return False
@@ -92,7 +92,7 @@ class GridSearchToolkit:
         return list(map(list, bfs(pacific) & bfs(atlantic)))
 
 
-    # ░░░░░░░░░░░░░░░░░░░ LeetCode 695 —— 岛屿的最大面积 ░░░░░░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 695 —— 岛屿的最大面积 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
 
@@ -117,7 +117,7 @@ class GridSearchToolkit:
         return ans
 
 
-    # ░░░░░░░░░░░░░░░░░░░ LeetCode 1162 —— 地图分析 ░░░░░░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 1162 —— 地图分析 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
     def maxDistance(self, grid: List[List[int]]) -> int:
         m, n = len(grid), len(grid[0])
         dist = [[float('inf') for _ in range(n)] for _ in range(m)]
