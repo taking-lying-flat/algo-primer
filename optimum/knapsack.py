@@ -170,3 +170,26 @@ class KnapsackApplications:
             for c in range(coin, amount + 1):
                 f[c] += f[c - coin]
         return f[amount]
+
+
+    # ░░░░░░░░░░░░░░ LeetCode 279 —— 完全平方数（完全背包 · 最少个数） ░░░░░░░░░░░░░░
+    def numSquares(
+        self, n: int
+    ) -> int:
+        # @cache
+        # def dfs(i: int, j: int) -> int:
+        #     if i == 0:
+        #         return inf if j else 0
+        #     if j < i * i:
+        #         return dfs(i - 1, j)
+        #     return min(dfs(i, j - i * i) + 1, dfs(i - 1, j))
+        # ans = dfs(isqrt(n), n)
+        # dfs.cache_clear()
+        # return ans
+
+        f = [0] + [inf] * n
+        for x in range(1, isqrt(n) + 1):
+            seq = x * x
+            for j in range(seq, n + 1):
+                f[j] = min(f[j], f[j - x * x] + 1)
+        return f[n]
