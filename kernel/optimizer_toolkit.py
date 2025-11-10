@@ -65,48 +65,6 @@ class MemoizationSearch:
         return max(dfs(i, j) for i in range(m) for j in range(n))
 
 
-class KnapsackToolkit:
-    # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换 ░░░░░░░░░░░░░░
-    @staticmethod
-    def coinChange(coins: List[int], amount: int) -> int:
-        """
-        完全背包思想的硬币找零（记忆化搜索）
-             1. dfs(i, c) 表示使用前 i 种硬币凑出金额 c 的最少硬币数
-             2. 对每种硬币，可以选择不用或继续使用
-             3. 不用：dfs(i-1, c)，转向下一种硬币
-             4. 继续用：dfs(i, c-coins[i]) + 1，硬币数加一
-             5. 使用记忆化避免重复计算，返回最小值
-        """
-        @cache
-        def dfs(i: int, c: int) -> int:
-            if i < 0:
-                return 0 if c == 0 else inf
-            not_take = dfs(i - 1, c)
-            take = inf
-            if c >= coins[i]:
-                take = dfs(i, c - coins[i]) + 1
-            return min(not_take, take)
-        ans = dfs(len(coins) - 1, amount)
-        return ans if ans < inf else -1
-
-    # ░░░░░░░░░░░░░░ LeetCode 279 —— 完全平方数 ░░░░░░░░░░░░░░
-    @staticmethod
-    def numSquares(n: int) -> int:
-        """
-        完全背包求最少完全平方数
-             1. f[j] 表示组成 j 的最少完全平方数个数
-             2. 枚举所有可能的平方数 i^2 (i from 1 to √n)
-             3. 对每个数 j，尝试减去一个平方数 i^2
-             4. f[j] = min(f[j], f[j-i^2] + 1) 状态转移
-             5. 返回 f[n] 即为答案
-        """
-        f = [0] + [inf] * n
-        for i in range(1, isqrt(n) + 1):
-            for j in range(i * i, n + 1):
-                f[j] = min(f[j], f[j - i * i] + 1)
-        return f[n]
-
-
 class SubsequenceDPToolkit:
     # ░░░░░░░░░░░ LeetCode 300 —— 最长递增子序列 ░░░░░░░░░░░
     @staticmethod
