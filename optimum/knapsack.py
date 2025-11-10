@@ -14,7 +14,6 @@ class KnapsackTemplates:
         return dfs(n - 1, cap)
 
     
-    # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 0-1 背包 · 递推 DP ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
     def knapsack_01_dp(self, volumes: List[int], values: List[int], capacity: int) -> int:
         dp = [0] * (capacity + 1)
         for vol, val in zip(volumes, values):
@@ -38,7 +37,6 @@ class KnapsackTemplates:
         return dfs(n - 1, cap)
 
     
-    # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 完全背包 · 递推 DP ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
     def knapsack_unbounded_dp(self, volumes: List[int], values: List[int], capacity: int) -> int:
         dp = [0] * (capacity + 1)
         for vol, val in zip(volumes, values):
@@ -66,7 +64,6 @@ class KnapsackTemplates:
         return dfs(n - 1, max_w, max_v)
 
     
-    # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 二维 0-1 背包 · 递推 DP ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
     def knapsack_2d_dp(self, volumes: List[int], weights: List[int], values: List[int], max_volume: int, max_weight: int) -> int:
         dp = [[0] * (max_weight + 1) for _ in range(max_volume + 1)]
         for vol, wgt, val in zip(volumes, weights, values):
@@ -93,7 +90,6 @@ class KnapsackTemplates:
         return dfs(n - 1, capacity)
 
     
-    # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 多重背包 · 二进制拆分 + 0-1 背包 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
     def knapsack_multiple_dp(self, volumes: List[int], values: List[int], counts: List[int], capacity: int) -> int:
         items: List[Tuple[int, int]] = []
         for v, w, s in zip(volumes, values, counts):
