@@ -57,35 +57,3 @@ class QueueAlgoUtils:
             ans += right - left + 1
         
         return ans
-
-    
-    # ░░░░░░░░░░░░░░ AcWing 4 进阶 —— 多重背包 ░░░░░░░░░░░░░░
-    @staticmethod
-    def knapsack_multiple_queue(
-        volumes: List[int],
-        values: List[int],
-        counts: List[int],
-        capacity: int
-    ) -> int:
-        """
-        单调队列优化多重背包: 求最大价值
-            1. 多重背包的朴素 DP: O(n*capacity*count)
-            2. 优化思路: 按体积同余分组，每组内用单调队列优化
-            3. 状态转移: dp[j] = max(dp[j-k*vol] + k*val), k ∈ [0, cnt]
-            4. 同余分组: j % vol = r 的位置为一组，组内转移
-        """
-        dp = [0] * (capacity + 1)
-        for vol, val, cnt in zip(volumes, values, counts):
-            for r in range(vol):
-                q: deque[Tuple[int, int]] = deque()
-                k = 0
-                for j in range(r, capacity + 1, vol):
-                    cur_val = dp[j] - k * val
-                    while q and q[-1][1] <= cur_val:
-                        q.pop()
-                    q.append((k, cur_val))
-                    while q[0][0] < k - cnt:
-                        q.popleft()
-                    dp[j] = q[0][1] + k * val
-                    k += 1
-        return dp[capacity]
