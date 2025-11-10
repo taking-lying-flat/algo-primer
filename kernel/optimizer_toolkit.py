@@ -86,26 +86,6 @@ class SubsequenceDPToolkit:
                 tails[idx] = x
         return len(tails)
 
-    # ░░░░░░░░░░░ LeetCode 1143 —— 最长公共子序列 ░░░░░░░░░░░
-    @staticmethod
-    def longestCommonSubsequence(text1: str, text2: str) -> int:
-        """
-        最长公共子序列 LCS（记忆化搜索）
-             1. dfs(i, j) 表示 text1[0:i+1] 和 text2[0:j+1] 的 LCS 长度
-             2. 边界: 任一索引小于 0 时返回 0
-             3. 如果当前字符相等，LCS 长度 = dfs(i-1, j-1) + 1
-             4. 如果不等，取两种情况最大值：跳过 text1[i] 或跳过 text2[j]
-             5. 使用记忆化避免重复计算
-        """
-        m, n = len(text1), len(text2)
-        @cache
-        def dfs(i: int, j: int) -> int:
-            if i < 0 or j < 0:
-                return 0
-            if text1[i] == text2[j]:
-                return dfs(i - 1, j - 1) + 1
-            return max(dfs(i - 1, j), dfs(i, j - 1))
-        return dfs(m - 1, n - 1)
 
     # ░░░░░░░░░░░ LeetCode 72 —— 编辑距离 ░░░░░░░░░░░
     @staticmethod
