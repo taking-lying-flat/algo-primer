@@ -26,29 +26,29 @@ class KnapsackTemplates:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 完全背包 · 记忆化搜索 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def knapsack_unbounded_memo(
-        self, weights: List[int], values: List[int], cap: int
+        def knapsack_unbounded(
+        self, weights: List[int], values: List[int], capacity: int
     ) -> int:
-        n = len(weights)
-        @cache
-        def dfs(i: int, c: int) -> int:
-            if i < 0 or c <= 0:
-                return 0
-            not_take = dfs(i - 1, c)
-            if c >= weights[i]:
-                take = values[i] + dfs(i, c - weights[i])  # 取当前物品后 i 不变，可再次选择
-                return max(take, not_take)
-            return not_take
-        return dfs(n - 1, cap)
+        # n = len(weights)
+        # @cache
+        # def dfs(i: int, c: int) -> int:
+        #     if i < 0 or c <= 0:
+        #         return 0
+        #     if c < weights[i]:             # 放不下当前物品，只能不选
+        #         return dfs(i - 1, c)
+        #     # 可以选当前物品：选了之后 i 不变，允许重复选择
+        #     return max(
+        #         dfs(i - 1, c),                             # 不选
+        #         dfs(i, c - weights[i]) + values[i],        # 选
+        #     )
+        #
+        # return dfs(n - 1, capacity)
 
-    
-    def knapsack_unbounded_dp(
-        self, volumes: List[int], values: List[int], capacity: int
-    ) -> int:
+        # 一维 DP 写法：容量正序枚举
         dp = [0] * (capacity + 1)
-        for vol, val in zip(volumes, values):
-            for j in range(vol, capacity + 1):
-                dp[j] = max(dp[j], dp[j - vol] + val)    
+        for w, val in zip(weights, values):
+            for c in range(w, capacity + 1):
+                dp[c] = max(dp[c], dp[c - w] + val)
         return dp[capacity]
 
     
