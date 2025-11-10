@@ -14,7 +14,6 @@ class KnapsackTemplates:
         #         dfs(i - 1, c),                           # 不选
         #         dfs(i - 1, c - weights[i]) + values[i],  # 选
         #     )
-        #
         # return dfs(n - 1, capacity)
 
         dp = [0] * (capacity + 1)
@@ -41,7 +40,6 @@ class KnapsackTemplates:
         #         dfs(i - 1, c),                             # 不选
         #         dfs(i, c - weights[i]) + values[i],        # 选
         #     )
-        #
         # return dfs(n - 1, capacity)
 
         # 一维 DP 写法：容量正序枚举
@@ -53,49 +51,38 @@ class KnapsackTemplates:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 二维约束 0-1 背包 · 记忆化搜索 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def knapsack_2d_memo(
-        self,
-        weights: List[int],
-        volumes: List[int],
-        values: List[int],
-        max_w: int,
-        max_v: int
-    ) -> int:
-        n = len(weights)
-        @cache
-        def dfs(i: int, w_rem: int, v_rem: int) -> int:
-            if i < 0 or w_rem <= 0 or v_rem <= 0:
-                return 0
-            not_take = dfs(i - 1, w_rem, v_rem)
-            if w_rem >= weights[i] and v_rem >= volumes[i]:
-                take = values[i] + dfs(
-                    i - 1,
-                    w_rem - weights[i],
-                    v_rem - volumes[i],
-                )
-                return max(take, not_take)
-            return not_take
-        return dfs(n - 1, max_w, max_v)
-
-    
-    def knapsack_2d_dp(
+    # ░░░░░░░░░░░░░░░░░░░░░ 二维 0-1 背包 ░░░░░░░░░░░░░░░░░░░░░
+    def knapsack_2d(
         self,
         volumes: List[int],
         weights: List[int],
         values: List[int],
         max_volume: int,
-        max_weight: int
+        max_weight: int,
     ) -> int:
+        # n = len(volumes)
+        # @cache
+        # def dfs(i: int, v_rem: int, w_rem: int) -> int:
+        #     if i < 0 or v_rem <= 0 or w_rem <= 0:
+        #         return 0
+        #     if v_rem < volumes[i] or w_rem < weights[i]:
+        #         return dfs(i - 1, v_rem, w_rem)  # 放不下当前物品，只能不选
+        #     return max(
+        #         dfs(i - 1, v_rem, w_rem),                                   # 不选
+        #         dfs(i - 1, v_rem - volumes[i], w_rem - weights[i]) + values[i],  # 选
+        #     )
+        # return dfs(n - 1, max_volume, max_weight)
+
         dp = [[0] * (max_weight + 1) for _ in range(max_volume + 1)]
         for vol, wgt, val in zip(volumes, weights, values):
             for v in range(max_volume, vol - 1, -1):
                 for w in range(max_weight, wgt - 1, -1):
-                    dp[v][w] = max(dp[v][w], dp[v - vol][w - wgt] + val)        
+                    dp[v][w] = max(dp[v][w], dp[v - vol][w - wgt] + val)
         return dp[max_volume][max_weight]
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 多重背包 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def knapsack_multiple_dp(
+    def knapsack_multiple(
         self,
         volumes: List[int],
         values: List[int],
@@ -115,6 +102,29 @@ class KnapsackTemplates:
         for vol, val in items:
             for j in range(capacity, vol - 1, -1):
                 dp[j] = max(dp[j], dp[j - vol] + val)
+        return dp[capacity]
+
+    def knapsack_multiple_queue(
+        self,
+        volumes: List[int],
+        values: List[int],
+        counts: List[int],
+        capacity: int
+    ) -> int:
+        dp = [0] * (capacity + 1)
+        for vol, val, cnt in zip(volumes, values, counts):
+            for r in range(vol):
+                q: deque[Tuple[int, int]] = deque()
+                k = 0
+                for j in range(r, capacity + 1, vol):
+                    cur_val = dp[j] - k * val
+                    while q and q[-1][1] <= cur_val:
+                        q.pop()
+                    q.append((k, cur_val))
+                    while q[0][0] < k - cnt:
+                        q.popleft()
+                    dp[j] = q[0][1] + k * val
+                    k += 1
         return dp[capacity]
 
 
