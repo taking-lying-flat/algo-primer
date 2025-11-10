@@ -117,3 +117,26 @@ class KnapsackTemplates:
             for j in range(capacity, vol - 1, -1):
                 dp[j] = max(dp[j], dp[j - vol] + val)
         return dp[capacity]
+
+
+class KnapsackApplications:
+    # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包 · 最少硬币数） ░░░░░░░░░░░░░░
+    def coinChange(
+        self, coins: List[int], amount: int
+    ) -> int:
+        # n = len(coins)
+        # @cache
+        # def dfs(i: int, c: int) -> int:
+        #     if i < 0:
+        #         return 0 if c == 0 else inf
+        #     not_take = dfs(i - 1, c)
+        #     if c >= coins[i]:
+        #         take = dfs(i, c - coins[i]) + 1
+        #         return min(take, not_take)
+        #     return not_take
+
+        f = [0] + [inf] * amount
+        for coin in coins:
+            for j in range(coin, amount + 1):
+                f[j] = min(f[j], f[j - coin] + 1)
+        return f[amount] if f[amount] < inf else -1
