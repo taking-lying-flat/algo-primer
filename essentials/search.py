@@ -1,6 +1,8 @@
 class SearchToolKit:
     # ★★★★★ ░░░░░░░░░░░░░░░░░░░░ LeetCode 51 —— N 皇后 ░░░░░░░░░░░░░░░░░░░░ ★★★★★
-    def solveNQueens(self, n: int) -> List[List[str]]:
+    def solveNQueens(
+        self, n: int
+    ) -> List[List[str]]:
         """
         N 皇后问题 - 经典回溯算法
             1. 逐行放置：每行必须且只能放一个皇后
@@ -36,7 +38,9 @@ class SearchToolKit:
 
 
     # ★★★★★ ░░░░░░░░░░░░░░░░░░░░░ LeetCode 212 —— 单词搜索 II ░░░░░░░░░░░░░░░░░░░░░ ★★★★★
-    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+    def findWords(
+        self, board: List[List[str]], words: List[str]
+    ) -> List[str]:
         """
         Trie + 网格 DFS 
 
