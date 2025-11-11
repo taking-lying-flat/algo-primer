@@ -227,6 +227,21 @@ class KnapsackApplications:
                 f[c] = (f[c] + f[c - j]) % MOD
         return f[n]
 
+
+    # ░░░░░░░░░░░ LeetCode 3180 —— 执行操作可获得的最大总奖励（0-1 背包 · 可行性转最值） ░░░░░░░░░░░
+    def maxTotalReward(
+        self, rewardValues: List[int]
+    ) -> int:
+        rewardValues.sort()
+        m = 2 * rewardValues[-1] - 1
+        
+        f = [True] + [False] * m
+        for x in rewardValues:
+            for j in range(2 * x - 1, x - 1, -1):
+                f[j] |= f[j - x]
+                
+        return max(i for i, can in enumerate(f) if can)
+
     
     # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包 · 最少硬币数） ░░░░░░░░░░░░░░
     def coinChange(
