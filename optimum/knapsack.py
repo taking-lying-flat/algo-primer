@@ -176,6 +176,31 @@ class KnapsackApplications:
                 f[c] += f[c - x]
         return f[m]
 
+
+    # ░░░░░░░░░░░░░░ LeetCode 2915 —— 和为目标值的最长子序列长度（0-1 背包 · 最值） ░░░░░░░░░░░░░░
+    def lengthOfLongestSubsequence(
+        self, nums: List[int], target: int
+    ) -> int:
+        # @cache
+        # def dfs(i: int, c: int) -> int:
+        #     if i < 0:
+        #         return 0 if c == 0 else -inf
+        #     if c < nums[i]:
+        #         return dfs(i - 1, c)
+        #     return max(
+        #         dfs(i - 1, c),              # 不选
+        #         dfs(i - 1, c - nums[i]) + 1 # 选
+        #     )
+        # ans = dfs(len(nums) - 1, target)
+        # dfs.cache_clear()
+        # return ans if ans > 0 else -1
+
+        f = [0] + [-inf] * target
+        for x in nums:
+            for c in range(target, x - 1, -1):
+                f[c] = max(f[c], f[c - x] + 1)
+        return f[target] if f[target] > 0 else -1
+
     
     # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包 · 最少硬币数） ░░░░░░░░░░░░░░
     def coinChange(
