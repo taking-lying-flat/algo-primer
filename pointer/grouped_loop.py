@@ -1,6 +1,8 @@
 class GroupedLoopSuite:
     # ░░░░░░░░░░░ LeetCode 228 —— 汇总区间 ░░░░░░░░░░░
-    def summaryRanges(self, nums: List[int]) -> List[str]:
+    def summaryRanges(
+        self, nums: List[int]
+    ) -> List[str]:
         def render(i: int, j: int) -> str:
             return str(nums[i]) if i == j else f"{nums[i]}->{nums[j]}"
 
@@ -17,7 +19,9 @@ class GroupedLoopSuite:
 
 
     # ░░░░░░░░░░░ LeetCode 1513 —— 仅含 1 的子串数 ░░░░░░░░░░░
-    def numSub(self, s: str) -> int:
+    def numSub(
+        self, s: str
+    ) -> int:
         ans = i = 0
         while i < len(s):
             if s[i] == '0':
@@ -32,7 +36,9 @@ class GroupedLoopSuite:
         
 
     # ░░░░░░░░░░░ LeetCode 1869 —— 哪种连续子字符串更长 ░░░░░░░░░░░
-    def checkZeroOnes(self, s: str) -> bool:
+    def checkZeroOnes(
+        self, s: str
+    ) -> bool:
         i = 0
         cnt = [0, 0]
         while i < len(s):
@@ -46,7 +52,9 @@ class GroupedLoopSuite:
 
     
     # ░░░░░░░░░░░ LeetCode 2760 —— 带阈值的最长偶奇子数组 ░░░░░░░░░░░
-    def longestAlternatingSubarray(self, nums: List[int], threshold: int) -> int:
+    def longestAlternatingSubarray(
+        self, nums: List[int], threshold: int
+    ) -> int:
         n = len(nums)
         ans = i = 0
         while i < n:
