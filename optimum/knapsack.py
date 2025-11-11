@@ -201,6 +201,32 @@ class KnapsackApplications:
                 f[c] = max(f[c], f[c - x] + 1)
         return f[target] if f[target] > 0 else -1
 
+
+    # ░░░░░░░░░░░░░░ LeetCode 2787 —— 按幂次方分解整数的方案数（0-1 背包 · 方案数） ░░░░░░░░░░░░░░
+    def numberOfWays(
+        self, n: int, x: int
+    ) -> int:
+        # 0-1 背包 · 方案数
+        # f[c]：恰好凑出和为 c 的方案数
+        # 转移：f[c] += f[c - j]，容量 c 必须倒序枚举（保证每个幂只用一次）
+
+        # @cache
+        # def dfs(i: int, c: int) -> int:
+        #     if i == 0:
+        #         return 1 if c == 0 else 0
+        #     if c < i ** x:
+        #         return dfs(i - 1, c)
+        #     return dfs(i - 1, c) + dfs(i - 1, c - i ** x)
+        # return dfs(n, n) % 1_000_000_007
+
+        MOD = 1_000_000_007
+        f = [1] + [0] * n
+        for i in range(1, n + 1):
+            j = i ** x
+            for c in range(n, j - 1, -1):
+                f[c] = (f[c] + f[c - j]) % MOD
+        return f[n]
+
     
     # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包 · 最少硬币数） ░░░░░░░░░░░░░░
     def coinChange(
