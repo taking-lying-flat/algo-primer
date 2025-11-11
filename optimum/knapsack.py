@@ -153,6 +153,30 @@ class KnapsackApplications:
         return f[s]
 
     
+    # ░░░░░░░░░░░░░░ LeetCode 494 —— 目标和（0-1 背包 · 方案数） ░░░░░░░░░░░░░░
+    def findTargetSumWays(self, 
+        nums: List[int], target: int
+    ) -> int:
+        s = sum(nums) - abs(target)
+        if s < 0 or s % 2 == 1:
+            return 0
+
+        # @cache
+        # def dfs(i: int, j: int) -> int:
+        #     if i < 0:
+        #         return 1 if j == 0 else 0
+        #     if j < nums[i]:
+        #         return dfs(i - 1, j)
+        #     return dfs(i - 1, j) + dfs(i - 1, j - nums[i])
+
+        m = s // 2
+        f = [1] + [0] * m
+        for x in nums:
+            for c in range(m, x - 1, -1):
+                f[c] += f[c - x]
+        return f[m]
+
+    
     # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包 · 最少硬币数） ░░░░░░░░░░░░░░
     def coinChange(
         self, coins: List[int], amount: int
