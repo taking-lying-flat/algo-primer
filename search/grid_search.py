@@ -1,6 +1,8 @@
 class GridSearchToolkit:
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 79 —— 单词搜索 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def exist(self, board: List[List[str]], word: str) -> bool:
+    def exist(
+        self, board: List[List[str]], word: str
+    ) -> bool:
         cnt = Counter(c for row in board for c in row)
         if not cnt >= Counter(word):
             return False
@@ -22,7 +24,9 @@ class GridSearchToolkit:
 
 
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 200 —— 岛屿数量 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def numIslands(self, grid: List[List[str]]) -> int:
+    def numIslands(
+        self, grid: List[List[str]]
+    ) -> int:
         if not grid or not grid[0]:
             return 0
         m, n = len(grid), len(grid[0])
@@ -47,7 +51,9 @@ class GridSearchToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 994 —— 腐烂的橘子 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def orangesRotting(self, grid: List[List[int]]) -> int:
+    def orangesRotting(
+        self, grid: List[List[int]]
+    ) -> int:
         if not grid or not grid[0]:
             return 0
         m, n = len(grid), len(grid[0])
@@ -75,7 +81,9 @@ class GridSearchToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 417 —— 太平洋大西洋水流问题 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+    def pacificAtlantic(
+        self, heights: List[List[int]]
+    ) -> List[List[int]]:
         m, n = len(heights), len(heights[0])
         def bfs(starts: List[Tuple[int, int]]) -> Set[Tuple[int, int]]:
             queue = deque(starts)
@@ -93,7 +101,9 @@ class GridSearchToolkit:
 
 
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 695 —— 岛屿的最大面积 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+    def maxAreaOfIsland(
+        self, grid: List[List[int]]
+    ) -> int:
         m, n = len(grid), len(grid[0])
 
         def bfs(i: int, j: int) -> int:
@@ -118,7 +128,9 @@ class GridSearchToolkit:
 
 
     # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 1162 —— 地图分析 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-    def maxDistance(self, grid: List[List[int]]) -> int:
+    def maxDistance(
+        self, grid: List[List[int]]
+    ) -> int:
         m, n = len(grid), len(grid[0])
         dist = [[float('inf') for _ in range(n)] for _ in range(m)]
         starts = []
