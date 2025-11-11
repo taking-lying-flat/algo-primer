@@ -1,6 +1,8 @@
 class TwoPointersToolKit:
     # ★★★★★ ░░░░░░░░░░░ LeetCode 76 · 最小覆盖子串 ░░░░░░░░░░░ ★★★★★
-    def minWindow(self, s: str, t: str) -> str:
+    def minWindow(
+        self, s: str, t: str
+    ) -> str:
         """
         类型：不定长滑动窗口 + 计数
 
@@ -37,7 +39,9 @@ class TwoPointersToolKit:
 
   
     # ★★★★★ ░░░░░░░░░░░ LeetCode 3134 · 找出唯一性数组的中位数 ░░░░░░░░░░░ ★★★★★
-    def medianOfUniquenessArray(self, nums: List[int]) -> int:
+    def medianOfUniquenessArray(
+        self, nums: List[int]
+    ) -> int:
         """
         类型：二分答案 + 不定长滑动窗口
 
@@ -86,7 +90,9 @@ class TwoPointersToolKit:
 
 
     # ★★★★★ ░░░░░░░░░░░ LeetCode 2953 —— 统计完全子字符串 ░░░░░░░░░░░ ★★★★★
-    def countCompleteSubstrings(self, word: str, k: int) -> int:
+    def countCompleteSubstrings(
+        self, word: str, k: int
+    ) -> int:
         """
         类型：分组循环 + 定长滑动窗口
 
@@ -129,7 +135,9 @@ class TwoPointersToolKit:
 
 
     # ★★★★★ ░░░░░░░░░░░ LeetCode 3259 —— 满足 K 约束的子字符串 II ░░░░░░░░░░░ ★★★★★
-    def countKConstraintSubstrings(self, s: str, k: int, queries: List[List[int]]) -> List[int]:
+    def countKConstraintSubstrings(
+        self, s: str, k: int, queries: List[List[int]]
+    ) -> List[int]:
         """
         不定长滑窗 + 前缀和 + 二分
 
@@ -181,7 +189,9 @@ class TwoPointersToolKit:
 
 
     # ★★★★★ ░░░░░░░░░░░ LeetCode 3298 —— 统计重新排列后包含另一个字符串的子字符串数目 II ░░░░░░░░░░░ ★★★★★
-    def validSubstringCount(self, word1: str, word2: str) -> int:
+    def validSubstringCount(
+        self, word1: str, word2: str
+    ) -> int:
         """
         不定长滑动窗口 + 计数
 
@@ -226,7 +236,9 @@ class TwoPointersToolKit:
 
 
     # ★★★★★ ░░░░░░░░░░░ LeetCode 992 —— K 个不同整数的子数组 ░░░░░░░░░░░ ★★★★★
-    def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
+    def subarraysWithKDistinct(
+        self, nums: List[int], k: int
+    ) -> int:
         """
         恰好型滑动窗口
 
@@ -263,7 +275,9 @@ class TwoPointersToolKit:
 
 
     # ★★★★★ ░░░░░░░░░░░ LeetCode 3306 —— 元音辅音字符串计数 II ░░░░░░░░░░░ ★★★★★
-    def countOfSubstrings(self, word: str, k: int) -> int:
+    def countOfSubstrings(
+        self, word: str, k: int
+    ) -> int:
         """
         恰好型滑动窗口：恰好 k 个辅音 + 包含全部 5 个元音（a,e,i,o,u）
 
