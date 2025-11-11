@@ -242,6 +242,38 @@ class KnapsackApplications:
                 
         return max(i for i, can in enumerate(f) if can)
 
+
+    # ░░░░░░░░░░░░░░░░░░░░ LeetCode 474 —— 一和零（0-1 背包 · 二维） ░░░░░░░░░░░░░░░░░░░░
+    def findMaxForm(
+        self, strs: List[str], m: int, n: int
+    ) -> int:
+        # 0-1 背包 · 二维容量
+        # f[j][k]：使用 j 个 0、k 个 1 的容量能选出的最多字符串数
+        # 转移：f[j][k] = max(f[j][k], f[j - cnt0][k - cnt1] + 1)
+
+        # @cache
+        # def dfs(i: int, j: int, k: int) -> int:
+        #     if i < 0 or j < 0 or k < 0:
+        #         return 0
+        #     cnt0 = strs[i].count("0")
+        #     cnt1 = strs[i].count("1")
+        #     if j < cnt0 or k < cnt1:
+        #         return dfs(i - 1, j, k)
+        #     return max(
+        #         dfs(i - 1, j, k),
+        #         dfs(i - 1, j - cnt0, k - cnt1) + 1,
+        #     )
+        # return dfs(len(strs) - 1, m, n)
+
+        f = [[0] * (n + 1) for _ in range(m + 1)]
+        for s in strs:
+            cnt0 = s.count("0")
+            cnt1 = s.count("1")
+            for j in range(m, cnt0 - 1, -1):
+                for k in range(n, cnt1 - 1, -1):
+                    f[j][k] = max(f[j][k], f[j - cnt0][k - cnt1] + 1)
+        return f[m][n]
+
     
     # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包 · 最少硬币数） ░░░░░░░░░░░░░░
     def coinChange(
