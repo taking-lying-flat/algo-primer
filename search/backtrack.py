@@ -1,6 +1,8 @@
 class BacktrackingToolkit:
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def subsets(self, nums: List[int]) -> List[List[int]]:
+    def subsets(
+        self, nums: List[int]
+    ) -> List[List[int]]:
         n = len(nums)
         subsets = []
         path = []
@@ -16,8 +18,9 @@ class BacktrackingToolkit:
         return subsets
 
     
-    # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def subsets_bitmask(self, nums: List[int]) -> List[List[int]]:
+    def subsets_bitmask(
+        self, nums: List[int]
+    ) -> List[List[int]]:
         n = len(nums)
         subsets = []
         def dfs(u: int, mask: int) -> None:
@@ -35,7 +38,9 @@ class BacktrackingToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 90 · 子集 II ░░░░░░░░░░░░░░░░░░░░░░░░
-    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+    def subsetsWithDup(
+        self, nums: List[int]
+    ) -> List[List[int]]:
         nums.sort()
         n = len(nums)
         on_path = []
@@ -59,7 +64,9 @@ class BacktrackingToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 46 · 全排列 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def permute(self, nums: List[int]) -> List[List[int]]:
+    def permute(
+        self, nums: List[int]
+    ) -> List[List[int]]:
         n = len(nums)
         result = []
         path = []
@@ -79,8 +86,9 @@ class BacktrackingToolkit:
         return result
 
     
-    # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 46 · 全排列 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def permute_bitmask(self, nums: List[int]) -> List[List[int]]:
+    def permute_bitmask(
+        self, nums: List[int]
+    ) -> List[List[int]]:
         n = len(nums)
         result = []
         path = []
@@ -98,7 +106,9 @@ class BacktrackingToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 47 · 全排列 II（有重复） ░░░░░░░░░░░░░░░░░░░░░░░░
-    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+    def permuteUnique(
+        self, nums: List[int]
+    ) -> List[List[int]]:
         cnt = Counter(nums)
         n = len(nums)
         res: List[List[int]] = []
@@ -119,7 +129,9 @@ class BacktrackingToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 77 · 组合 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def combine(self, n: int, k: int) -> List[List[int]]:
+    def combine(
+        self, n: int, k: int
+    ) -> List[List[int]]:
         result: List[List[int]] = []
         path: List[int] = []
         def dfs(u: int, start: int) -> None:
@@ -136,8 +148,9 @@ class BacktrackingToolkit:
         return result
 
     
-    # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 77 · 组合 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def combine_bitmask(self, n: int, k: int) -> List[List[int]]:
+    def combine_bitmask(
+        self, n: int, k: int
+    ) -> List[List[int]]:
         result: List[int] = []
         def dfs(u: int, cnt: int, mask: int) -> None:
             if cnt + n - u < k:
@@ -158,7 +171,9 @@ class BacktrackingToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 22 —— 括号生成 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def generateParenthesis(self, n: int) -> List[str]:
+    def generateParenthesis(
+        self, n: int
+    ) -> List[str]:
         ans: List[str] = []
         chosen: List[str] = []
         def dfs(i: int, open_count: int) -> None:
@@ -178,7 +193,9 @@ class BacktrackingToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 17 —— 电话号码的字母组合 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def letterCombinations(self, digits: str) -> List[str]:
+    def letterCombinations(
+        self, digits: str
+    ) -> List[str]:
         if not digits:
             return []
         MAPPING = "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
@@ -198,7 +215,9 @@ class BacktrackingToolkit:
 
 
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 131 —— 分割回文串 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def partition(self, s: str) -> List[List[str]]:
+    def partition(
+        self, s: str
+    ) -> List[List[str]]:
         n = len(s)
         ans = []
         path = []
@@ -217,7 +236,9 @@ class BacktrackingToolkit:
 
     
     # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 39 —— 组合总和 ░░░░░░░░░░░░░░░░░░░░░░░░
-    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+    def combinationSum(
+        self, candidates: List[int], target: int
+    ) -> List[List[int]]:
         candidates.sort()
         ans: List[List[int]] = []
         path: List[int] = []
