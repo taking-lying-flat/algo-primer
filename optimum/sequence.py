@@ -43,9 +43,8 @@ class SubsequenceDPToolkit:
 
 
     # ░░░░░░░░░░░░░░░ LeetCode 72 —— 编辑距离（经典二维 DP · 子序列） ░░░░░░░░░░░░░░░
-    @staticmethod
     def minDistance(
-        word1: str, word2: str
+        self, word1: str, word2: str
     ) -> int:
         # 编辑距离 · 二维 DP
         # f[i][j]：word1 前 i 个字符变成 word2 前 j 个字符的最少操作数
