@@ -13,3 +13,23 @@ class FoundationToolKit:
                 dfs(i - 1) + 1,
             ) + costs[i]
         return dfs(n - 1)
+
+
+    # ░░░░░░░░░░░░░░ LeetCode 377 —— 组合总和 Ⅳ（排列数 · 完全背包） ░░░░░░░░░░░░░░
+    def combinationSum4(
+        self, nums: List[int], target: int
+    ) -> int:
+        # @cache
+        # def dfs(i: int) -> int:
+        #     if i == 0:
+        #         return 1
+        #     return sum(dfs(i - x) for x in nums if x <= i)
+        # return dfs(target)
+
+        # —— 外层循环枚举体积 i，内层循环枚举物品 x
+        #    => 顺序敏感，计算的是排列数
+        # 若要计算组合数（完全背包），则应「外层枚举物品，内层枚举体积」：
+        f = [1] + [0] * target
+        for i in range(1, target + 1):
+            f[i] = sum(f[i - x] for x in nums if x <= i)
+        return f[target]
