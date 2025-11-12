@@ -45,3 +45,32 @@ class StateMachineToolkit:
                 f[i][0] - p,    # 昨天不持有，今天买入
             )
         return f[n][0]
+
+
+    # ░░░░░░░░░░░░░░ LeetCode 123 —— 买卖股票的最佳时机 III（状态机 DP · 最多两次交易） ░░░░░░░░░░░░░░
+    def maxProfit_123(
+        self, prices: List[int]
+    ) -> int:
+        # 状态机 DP · 压缩版
+        # buy1/buy2：第 1/2 次买入后的最大利润（手里有股票）
+        # sell1/sell2：第 1/2 次卖出后的最大利润（手里没股票）
+
+        # # 完整状态机写法
+        # # f[k][0]：完成 k 笔交易、不持有 的最大利润
+        # # f[k][1]：完成 k 笔交易、持有 的最大利润
+        # k = 2
+        # f = [[0, -inf] for _ in range(k + 1)]
+        # for p in prices:
+        #     for j in range(k, 0, -1):
+        #         f[j][0] = max(f[j][0], f[j][1] + p)      # 卖出，完成第 j 笔
+        #         f[j][1] = max(f[j][1], f[j - 1][0] - p)  # 从 j-1 笔买入
+        # return f[2][0]
+
+        buy1 = buy2 = -inf
+        sell1 = sell2 = 0
+        for p in prices:
+            sell2 = max(sell2, buy2 + p)   # 第二次卖出
+            buy2  = max(buy2,  sell1 - p)  # 第二次买入
+            sell1 = max(sell1, buy1 + p)   # 第一次卖出
+            buy1  = max(buy1,  -p)         # 第一次买入（从 0 开始）
+        return sell2
