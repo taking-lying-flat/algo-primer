@@ -87,31 +87,6 @@ class SubsequenceDPToolkit:
         return len(tails)
 
 
-    # ░░░░░░░░░░░ LeetCode 72 —— 编辑距离 ░░░░░░░░░░░
-    @staticmethod
-    def minDistance(word1: str, word2: str) -> int:
-        """
-        编辑距离（三种操作的记忆化搜索）
-             1. dfs(i, j) 表示 word1[0:i+1] 转换为 word2[0:j+1] 的最少操作数
-             2. 边界: i < 0 返回 j + 1（插入），j < 0 返回 i+1（删除）
-             3. 字符相等时无需操作: dfs(i-1, j-1)
-             4. 字符不等时取三种操作最小值：
-                - 删除 word1[i]: dfs(i-1, j) + 1
-                - 插入字符: dfs(i, j-1) + 1
-                - 替换 word1[i]: dfs(i-1, j-1) + 1
-        """
-        m, n = len(word1), len(word2)
-        @cache
-        def dfs(i: int, j: int) -> int:
-            if i < 0:
-                return j + 1
-            if j < 0:
-                return i + 1
-            if word1[i] == word2[j]:
-                return dfs(i - 1, j - 1)
-            return min(dfs(i - 1, j), dfs(i, j - 1), dfs(i - 1, j - 1)) + 1
-        return dfs(m - 1, n - 1)
-
     # ░░░░░░░░░░░ LeetCode 44 —— 通配符匹配 ░░░░░░░░░░░
     @staticmethod
     def isMatch(s: str, p: str) -> bool:
