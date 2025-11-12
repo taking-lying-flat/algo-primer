@@ -1,6 +1,6 @@
 class StateMachineToolkit:
     # ░░░░░░░░░░░░░░░ LeetCode 121 —— 买卖股票的最佳时机（状态机 DP · 一次交易） ░░░░░░░░░░░░░░░
-    def maxProfit(
+    def maxProfit_121(
         self, prices: List[int]
     ) -> int:
         # f0：当前不持有股票的最大利润
