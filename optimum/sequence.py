@@ -78,3 +78,68 @@ class SubsequenceDPToolkit:
                         f[i][j],       # 替换
                     ) + 1
         return f[m][n]
+
+
+    # ░░░░░░░░░░░░░░░ LeetCode 44 —— 通配符匹配 ░░░░░░░░░░░░░░░
+    def isMatch(
+        self, s: str, p: str
+    ) -> bool:
+        """
+        1. dfs(i, j) 判断 s[0..i] 与 p[0..j] 是否匹配（均为闭区间）
+        2. 边界：当 j < 0（模式串耗尽），只有 i < 0（文本也耗尽）才匹配
+        3. 当 i < 0（文本耗尽），模式串剩余必须全部是 '*' 才匹配
+        4. 若 p[j] 为 '*'：
+           - 视为匹配空串：dfs(i, j - 1)
+           - 视为匹配一个字符并继续吞字符：dfs(i - 1, j)
+        5. 普通字符或 '?'：必须与 s[i] 对齐（'?' 视为任意字符），然后 dfs(i - 1, j - 1)
+        """
+        m, n = len(s), len(p)
+        @cache
+        def dfs(i: int, j: int) -> bool:
+            if j < 0:
+                return i < 0
+            if i < 0:
+                return all(ch == '*' for ch in p[:j + 1])
+            if p[j] == '*':
+                return dfs(i, j - 1) or dfs(i - 1, j)
+            # 普通字符或 '?'
+            if p[j] == '?' or p[j] == s[i]:
+                return dfs(i - 1, j - 1)
+            return False
+        return dfs(m - 1, n - 1)
+
+
+    # ░░░░░░░░░░░░░░░ LeetCode 10 —— 正则表达式匹配 ░░░░░░░░░░░░░░░
+    def isMatch(
+        self, s: str, p: str
+    ) -> bool:
+        """
+        正则表达式匹配（支持 . 和 * 的记忆化搜索）
+             1. dfs(i, j) 判断 s[0:i+1] 与 p[0:j+1] 是否匹配
+             2. 边界: 模式串耗尽时，字符串也必须耗尽
+             3. 字符串耗尽时，模式串只能是 x*y*z* 形式
+             4. 遇到 '*' 时有两种选择：
+                - 跳过 "x*" 两个字符（匹配 0 次）
+                - 若前一字符匹配，消费 s[i]，继续停在 '*'（匹配多次）
+             5. 普通字符或 '.' 必须精确匹配才能继续
+        """
+        m, n = len(s), len(p)
+        @cache
+        def dfs(i: int, j: int) -> bool:
+            if j < 0:                      # 模式串已耗尽
+                return i < 0
+            if i < 0:                      # s 耗尽，只能匹配形如 a*b*c*...
+                return p[j] == '*' and dfs(i, j - 2)
+            if p[j] == '*':
+                # 1) 跳过 "x*" 两字符
+                if dfs(i, j - 2):
+                    return True
+                # 2) 若当前字符可匹配，则消费 s[i]，仍停在 '*' 处继续匹配
+                if p[j - 1] in {s[i], '.'}:
+                    return dfs(i - 1, j)
+                return False
+            else:
+                if p[j] in {s[i], '.'}:
+                    return dfs(i - 1, j - 1)
+                return False
+        return dfs(m - 1, n - 1)
