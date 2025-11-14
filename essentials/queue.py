@@ -1,5 +1,5 @@
 class QueueAlgoUtils:
-    # ░░░░░░░░░░░ LeetCode 239 —— 滑动窗口最大值 ░░░░░░░░░░░
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 239 —— 滑动窗口最大值 ░░░░░░░░░░░ ★★★★★
     def maxSlidingWindow(
       self, nums: List[int], k: int
     ) -> List[int]:
@@ -29,7 +29,7 @@ class QueueAlgoUtils:
         return ans
 
     
-    # ░░░░░░░░░░░ LeetCode 2762 —— 不间断子数组 ░░░░░░░░░░░
+    # ★★★★★ ░░░░░░░░░░░ LeetCode 2762 —— 不间断子数组 ░░░░░░░░░░░ ★★★★★
     def continuousSubarrays(
       self, nums: List[int]
     ) -> int:
