@@ -1,6 +1,8 @@
 class SortingToolkit:
     # ░░░░░░░░░░░░░░ 快速排序 ░░░░░░░░░░░░░░
-    def quickSort(self, arr: List[int], left: int, right: int) -> None:
+    def quickSort(
+        self, arr: List[int], left: int, right: int
+    ) -> None:
         """
         Hoare 分区，原地升序快速排序
             1. 选择中间元素作为基准值 pivot
@@ -25,8 +27,11 @@ class SortingToolkit:
         self.quickSort(arr, left, j)
         self.quickSort(arr, i, right)
 
+    
     # ░░░░░░░░░░░░░░ 归并排序 ░░░░░░░░░░░░░░
-    def mergeSort(self, arr: List[int], left: int, right: int) -> None:
+    def mergeSort(
+        self, arr: List[int], left: int, right: int
+    ) -> None:
         """
         分治＋双指针合并的原地升序归并排序
             1. 将数组递归地分成两半
@@ -53,9 +58,11 @@ class SortingToolkit:
         merged.extend(arr[j:right + 1])
         arr[left:right + 1] = merged
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 215 —— 数组中的第K个最大元素 ░░░░░░░░░░░░░░
-    @staticmethod
-    def findKthLargest(nums: List[int], k: int) -> int:
+    def findKthLargest(
+        self, nums: List[int], k: int
+    ) -> int:
         """ 
         使用快速选择算法查找第 k 大元素
             1. 基于快速排序的分区思想
@@ -83,7 +90,9 @@ class SortingToolkit:
 
     
     # ░░░░░░░░░░░░░░ 逆序对的数量 ░░░░░░░░░░░░░░
-    def reversePairs(self, nums: List[int], left: int, right: int) -> int:
+    def reversePairs(
+        self, nums: List[int], left: int, right: int
+    ) -> int:
         """
         归并分治:
             1. 递归地将区间 [left, right] 分成左右两半：[left, mid] 与 [mid+1, right]
