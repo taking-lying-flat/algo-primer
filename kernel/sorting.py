@@ -27,6 +27,17 @@ class SortingToolkit:
         self.quickSort(arr, left, j)
         self.quickSort(arr, i, right)
 
+
+    # ░░░░░░░░░░░░░░ 快速排序 ░░░░░░░░░░░░
+    def stable_quicksort(self, arr: List[int]) -> List[int]:
+        if len(arr) <= 1:
+            return arr[:]
+        pivot = arr[len(arr) // 2]
+        less = [x for x in arr if x < pivot]
+        equal = [x for x in arr if x == pivot]
+        greater = [x for x in arr if x > pivot]
+        return self.stable_quicksort(less) + equal + self.stable_quicksort(greater)
+
     
     # ░░░░░░░░░░░░░░ 归并排序 ░░░░░░░░░░░░░░
     def mergeSort(
