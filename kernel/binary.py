@@ -208,3 +208,33 @@ class BinaryAnswerUtils:
             else:                        # case 2：蓝区→向左收
                 right = mid - 1
         return left
+
+
+    # ░░░░░░░░░░░ LeetCode 410 —— 分割数组的最大值（答案二分） ░░░░░░░░░░░
+    def splitArray(
+        self, nums: List[int], k: int
+    ) -> int:
+        """
+        二分答案：最小化“每段和的上界” mx
+        蓝区：is_blue(mx)=True（可分 ≤k 段）→ 试着再小：right = mid
+        红区：is_blue(mx)=False（需要 >k 段）→ 调大上界：left = mid + 1
+        """
+        def is_blue(mx: int) -> bool:
+            parts = 1
+            s = 0
+            for x in nums:
+                if s + x > mx:
+                    parts += 1
+                    s = x
+                else:
+                    s += x
+            return parts <= k
+    
+        left, right = max(nums), sum(nums)
+        while left < right:
+            mid = (left + right) // 2
+            if is_blue(mid):      # 蓝区：可行，收缩右边界
+                right = mid
+            else:                 # 红区：不可行，增大上界
+                left = mid + 1
+        return left
