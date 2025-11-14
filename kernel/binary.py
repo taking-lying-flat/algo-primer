@@ -64,11 +64,10 @@ class BinarySearchTemplate:
 
 class BinarySearchUtils:
     # ░░░░░░░░░░░░░░ LeetCode 34 —— 在排序数组中查找元素的第一个和最后一个位置 ░░░░░░░░░░░░░░
-    @staticmethod
-    def searchRange(nums: List[int], target: int) -> List[int]:
-        """ 使用两次二分：找最后一个红区元素 和 第一个蓝区元素 """
+    def searchRange(
+        self, nums: List[int], target: int
+    ) -> List[int]:
         def find_last_red(left: int = 0, right: int = len(nums) - 1) -> int:
-            """ 找最后一个 <= target 的位置 """
             while left < right:
                 mid = (left + right + 1) // 2
                 if nums[mid] <= target:
@@ -78,7 +77,6 @@ class BinarySearchUtils:
             return left
         
         def find_first_blue(left: int = 0, right: int = len(nums) - 1) -> int:
-            """ 找第一个 >= target 的位置 """
             while left < right:
                 mid = (left + right) // 2
                 if nums[mid] >= target:
@@ -92,9 +90,11 @@ class BinarySearchUtils:
             return [-1, -1]
         return [l2, l1]
 
+    
     # ░░░░░░░░░░░ LeetCode 153 —— 寻找旋转排序数组中的最小值 ░░░░░░░░░░░
-    @staticmethod
-    def findMin(nums: List[int]) -> int:
+    def findMin(
+        self, nums: List[int]
+    ) -> int:
         """
         旋转排序数组中的最小值
              1. 旋转数组特点：存在一个断点，左边部分 > 右边部分
@@ -102,7 +102,6 @@ class BinarySearchUtils:
              3. 如果 nums[mid] <= nums[-1]，说明 mid 在右半部分，最小值在 mid 或左边
              4. 如果 nums[mid] > nums[-1]，说明 mid 在左半部分，最小值在右边
              5. 收缩区间直到找到最小值
-        时间复杂度：O(log n)，空间复杂度：O(1)
         """
         left, right = 0, len(nums) - 1
         while left < right:
@@ -113,9 +112,11 @@ class BinarySearchUtils:
                 left = mid + 1   # mid 在左半部分，最小值在右边
         return nums[left]
 
+    
     # ░░░░░░░░░░░ LeetCode 33 —— 搜索旋转排序数组 ░░░░░░░░░░░
-    @staticmethod
-    def search_rotated(nums: List[int], target: int) -> int:
+    def search_rotated(
+        self, nums: List[int], target: int
+    ) -> int:
         """
         红 / 蓝 区划分由下式给出
             is_red(i) = (x <= target) ^ (x > pivot) ^ (target > pivot), 其中 pivot = nums[-1]
@@ -139,9 +140,11 @@ class BinarySearchUtils:
                 right = mid - 1
         return left if nums[left] == target else -1
 
+    
     # ░░░░░░░░░░░ LeetCode 74 —— 搜索二维矩阵 ░░░░░░░░░░░
-    @staticmethod
-    def searchMatrix(matrix: List[List[int]], target: int) -> bool:
+    def searchMatrix(
+        self, matrix: List[List[int]], target: int
+    ) -> bool:
         """
         搜索二维矩阵（每行递增，下一行首元素大于上一行末元素）
              1. 将二维矩阵视为一维有序数组
@@ -159,9 +162,11 @@ class BinarySearchUtils:
                 right = mid - 1
         return matrix[left // n][left % n] == target
 
+    
     # ░░░░░░░░░░░ LeetCode 240 —— 搜索二维矩阵 II ░░░░░░░░░░░
-    @staticmethod
-    def searchMatrixII(matrix: List[List[int]], target: int) -> bool:
+    def searchMatrixII(
+        self, matrix: List[List[int]], target: int
+    ) -> bool:
         """
         搜索二维矩阵 II（每行递增，每列递增）, 核心思想是Z字形搜索
              1. 从左下角或右上角开始（这里选择左下角）
@@ -171,7 +176,6 @@ class BinarySearchUtils:
         """
         m, n = len(matrix), len(matrix[0])
         i, j = m - 1, 0  # 从左下角开始
-        
         while i >= 0 and j < n:
             x = matrix[i][j]
             if x < target:
@@ -180,14 +184,14 @@ class BinarySearchUtils:
                 i -= 1   # 当前值太大，向上移动
             else:
                 return True
-                
         return False
 
 
 class BinaryAnswerUtils:
     # ░░░░░░░░░░░ LeetCode 274 —— H 指数 ░░░░░░░░░░░
-    @staticmethod
-    def hIndex(citations: List[int]) -> int:
+    def hIndex(
+        self, citations: List[int]
+    ) -> int:
         """
         二分答案：最大 h 使得“引用次数 ≥ h”的论文数 ≥ h
         红区: cnt ≥ h  —— 当前 h 可行，尝试更大  
