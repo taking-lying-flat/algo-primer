@@ -9,8 +9,9 @@ class BinarySearchTemplate:
        - 返回第一个 True 的位置
     核心思想：任何满足"单调性"的布尔函数都可以使用
     """
-    @staticmethod
-    def rightmost_red(left: int, right: int, is_red: Callable[[int], bool]) -> int:
+    def rightmost_red(
+        self, left: int, right: int, is_red: Callable[[int], bool]
+    ) -> int:
         """
         示例序列:  [T, T, T, T, F, F, F]
                             ↑
@@ -27,8 +28,9 @@ class BinarySearchTemplate:
                 right = mid - 1
         return left
     
-    @staticmethod
-    def leftmost_blue(left: int, right: int, is_blue: Callable[[int], bool]) -> int:
+    def leftmost_blue(
+        self, left: int, right: int, is_blue: Callable[[int], bool]
+    ) -> int:
         """
         示例序列:  [F, F, F, T, T, T, T]
                             ↑
@@ -44,16 +46,13 @@ class BinarySearchTemplate:
                 left = mid + 1
         return left
 
-    @staticmethod
     def float_binary_search(
-        left: float, 
-        right: float, 
-        check: Callable[[float], bool], 
-        eps: float = 1e-9) -> float:
-    """
-    浮点数二分查找模板 - 寻找满足条件的最小值
-    在连续区间 [left, right] 中找到满足 check(x) = True 的最小 x
-    """
+        self, left: float, right: float, check: Callable[[float], bool], eps: float = 1e-9
+    ) -> float:
+        """
+        浮点数二分查找模板 - 寻找满足条件的最小值
+        在连续区间 [left, right] 中找到满足 check(x) = True 的最小 x
+        """
     while right - left > eps:
         mid = (left + right) / 2
         if check(mid):
