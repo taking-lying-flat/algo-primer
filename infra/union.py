@@ -1,6 +1,8 @@
 class UnionFindSuite:
     # ░░░░░░░░░░░ LeetCode 2709 —— 最大公约数遍历 ░░░░░░░░░░░
-    def canTraverseAllPairs(self, nums: List[int]) -> bool:
+    def canTraverseAllPairs(
+        self, nums: List[int]
+    ) -> bool:
         """
         最大公约数遍历 —— 质因数分解 + 并查集
              1. 特判：长度为 1 必然可行；若存在 1 且长度 > 1，一定不连通。
@@ -10,10 +12,10 @@ class UnionFindSuite:
         """
         if len(nums) == 1:
             return True
-        
+            
         if 1 in nums:
             return False
-        
+            
         max_val = max(nums)
         spf = list(range(max_val + 1))
         i = 2
