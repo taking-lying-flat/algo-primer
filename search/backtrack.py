@@ -250,7 +250,39 @@ class BacktrackingToolkit:
                 return
             dfs(u + 1, left)
             path.append(candidates[u])
-            dfs(u, left - candidates[u])
+            dfs(u, left - candidates[u])   # 重复选择
             path.pop()
+        dfs(0, target)
+        return ans
+
+
+    # ░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode 40 —— 组合总和 II ░░░░░░░░░░░░░░░░░░░░░░░░
+    def combinationSum2(
+        self, candidates: List[int], target: int
+    ) -> List[List[int]]:
+        n = len(candidates)
+        candidates.sort()
+        ans = []
+        on_path = []
+
+        def dfs(i: int, left: int) -> None:
+            if left == 0:
+                ans.append(on_path[:])
+                return
+            if i == n or left < candidates[i]:
+                return
+
+            # 选 candidates[i]
+            on_path.append(candidates[i])
+            dfs(i + 1, left - candidates[i])
+            on_path.pop()
+
+            # 不选当前值 x，并且跳过后面所有相同的 x，避免重复组合
+            x = candidates[i]
+            i += 1
+            while i < n and candidates[i] == x:
+                i += 1
+            dfs(i, left)  # 不选所有等于 x 的数
+
         dfs(0, target)
         return ans
