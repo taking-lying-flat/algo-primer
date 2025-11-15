@@ -210,6 +210,38 @@ class BinaryAnswerUtils:
         return left
 
 
+    # ░░░░░░░░░░░ LeetCode 275 —— H 指数 II（升序数组 · 二分答案 · 红蓝判定） ░░░░░░░░░░░
+    def hIndex(
+        self, citations: List[int]
+    ) -> int:
+        """
+        已升序的 citations，二分答案 h：
+          is_red(h)：数组中“≥ h”的论文数是否 ≥ h（可行 = 红区）
+          外层：红区向右扩，蓝区向左收，收敛到最大可行 h
+        说明：这里默认 citations 非空；若需要健壮性可在外层添加空数组判断。
+        """
+        def is_red(ans: int) -> int:
+            # 在升序数组中二分找首个 >= ans 的下标（lower_bound）
+            left, right = 0, len(citations) - 1
+            while left < right:
+                mid = (left + right) // 2
+                if citations[mid] >= ans:
+                    right = mid          # 保留满足的一侧，收缩右边界
+                else:
+                    left = mid + 1       # 不满足，左边界右移
+            return len(citations) - left >= ans
+    
+        # 二分答案区间：[0, max(citations)]
+        left, right = 0, max(citations)
+        while left < right:
+            pivot = (left + right + 1) // 2   # 取上中位，防止死循环
+            if is_red(pivot):                 # 红区：可行 → 向右扩
+                left = pivot
+            else:                             # 蓝区：不可行 → 向左收
+                right = pivot - 1
+        return left
+
+
     # ░░░░░░░░░░░ LeetCode 410 —— 分割数组的最大值（答案二分） ░░░░░░░░░░░
     def splitArray(
         self, nums: List[int], k: int
