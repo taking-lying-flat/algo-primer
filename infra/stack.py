@@ -1,12 +1,5 @@
 # ░░░░░░░░░░░ LeetCode 155 —— 最小栈 ░░░░░░░░░░░
 class MinStack:
-    """
-    支持 O(1) 时间获取最小值的栈
-        - 使用辅助栈同步维护每个状态对应的最小值
-        - 初始化时加入哨兵 float('inf')，避免空栈判断
-        - push 时：辅助栈压入 min(当前值, 栈顶最小值)
-        - pop 时：两个栈同步弹出
-    """
     def __init__(self):
         self.stack = []
         self.min_stack = [float('inf')]  # 哨兵：避免空栈判断
@@ -30,12 +23,6 @@ class StackAlgoUtils:
     # ░░░░░░░░░░░░░░ LeetCode 20 —— 有效的括号 ░░░░░░░░░░░░░░
     @staticmethod
     def isValid(s: str) -> bool:
-        """
-        括号匹配验证
-            1. 左括号入栈对应的右括号
-            2. 遇到右括号时，栈顶应该匹配
-            3. 最后栈应该为空
-        """
         if len(s) % 2:
             return False
         pairs = {'(': ')', '[': ']', '{': '}'}
@@ -50,18 +37,8 @@ class StackAlgoUtils:
     # ░░░░░░░░░░░ LeetCode 32 —— 最长有效括号 ░░░░░░░░░░░
     @staticmethod
     def longestValidParentheses(s: str) -> int:
-        """
-            1. 用栈存放索引，初始压入 -1 作为哨兵
-            2. 遍历字符串：
-               - 遇到 '('，将当前索引压入栈
-               - 遇到 ')'，先 pop 栈顶：
-                 • 若栈空：说明没有匹配的 '('，将当前索引 i 作为新的哨兵压入
-                 • 否则：当前有效子串长度 = i - stack[-1]，更新 max_len
-            3. 返回 max_len
-        """
         max_len = 0
         stack: List[int] = [-1]  # 哨兵：有效子串起点前的位置
-        
         for i, ch in enumerate(s):
             if ch == '(':
                 stack.append(i)
@@ -71,20 +48,11 @@ class StackAlgoUtils:
                     stack.append(i)
                 else:                # 以当前 ')' 为结尾的有效子串长度
                     max_len = max(max_len, i - stack[-1])
-        
         return max_len
 
     # ░░░░░░░░░░░░░░ LeetCode 394 —— 字符串解码 ░░░░░░░░░░░░░░
     @staticmethod
     def decodeString(s: str) -> str:
-        """
-        使用栈解码编码字符串
-        栈保存: (外层字符串, 重复次数) - 每次遇到 '[' 时保存当前状态
-            1. 遇到数字: 累积重复次数
-            2. 遇到 '[': 将当前状态压栈，重置变量处理内层
-            3. 遇到 ']': 弹栈恢复外层状态，将内层结果重复后拼接
-            4. 遇到字母: 直接添加到当前字符串
-        """
         stack, multi, res = [], 0, ""
         for c in s:
             if c == '[':
@@ -97,20 +65,11 @@ class StackAlgoUtils:
                 multi = multi * 10 + int(c)
             else:
                 res += c
-        
         return res
 
     # ░░░░░░░░░░░ LeetCode 739 —— 每日温度 ░░░░░░░░░░░
     @staticmethod
     def dailyTemperatures(temperatures: List[int]) -> List[int]:
-        """
-        单调递减栈求等待天数
-             1. 维护单调递减栈，存储还未找到更高温度的日期
-             2. 遍历每天温度，如果比栈顶温度高，栈顶找到答案
-             3. 答案是当前日期减去栈顶日期（等待的天数）
-             4. 持续弹栈并记录答案，直到栈顶温度 ≥ 当前温度
-             5. 当前日期入栈，等待找到更高温度
-        """
         n = len(temperatures)
         ans: List[int] = [0] * n
         stack: List[int] = []  # 下标栈，自底→顶温度递减
