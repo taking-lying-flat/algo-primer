@@ -5,7 +5,6 @@ class GroupedLoopSuite:
     ) -> List[str]:
         def render(i: int, j: int) -> str:
             return str(nums[i]) if i == j else f"{nums[i]}->{nums[j]}"
-
         n = len(nums)
         ans = []
         i = 0
