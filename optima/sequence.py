@@ -143,3 +143,20 @@ class SubsequenceDPToolkit:
                     return dfs(i - 1, j - 1)
                 return False
         return dfs(m - 1, n - 1)
+
+
+    # ░░░░░░░░░░░ LeetCode 139 —— 单词拆分（DP） ░░░░░░░░░░░
+    def wordBreak(
+        self, s: str, wordDict: List[str]
+    ) -> bool:
+        max_len = max(map(len, wordDict))
+        words = set(wordDict)
+        n = len(s)
+        f = [True] + [False] * n
+        for i in range(len(s) + 1):
+            start = max(0, i - max_len)
+            for j in range(start, i):
+                if s[j:i] in words and f[j]:
+                    f[i] = True
+                    break
+        return f[n]
