@@ -80,6 +80,19 @@ class SubsequenceDPToolkit:
         return f[m][n]
 
 
+    def lengthOfLIS(
+        self, nums: List[int]
+    ) -> int:
+        tails: List[int] = []
+        for x in nums:
+            idx = bisect_left(tails, x)
+            if idx == len(tails):
+                tails.append(x)
+            else:
+                tails[idx] = x
+        return len(tails)
+
+
     # ░░░░░░░░░░░░░░░ LeetCode 44 —— 通配符匹配 ░░░░░░░░░░░░░░░
     def isMatch(
         self, s: str, p: str
