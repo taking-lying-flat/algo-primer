@@ -21,8 +21,9 @@ class MinStack:
 
 class StackAlgoUtils:
     # ░░░░░░░░░░░░░░ LeetCode 20 —— 有效的括号 ░░░░░░░░░░░░░░
-    @staticmethod
-    def isValid(s: str) -> bool:
+    def isValid(
+        self, s: str
+    ) -> bool:
         if len(s) % 2:
             return False
         pairs = {'(': ')', '[': ']', '{': '}'}
@@ -34,9 +35,11 @@ class StackAlgoUtils:
                 return False
         return not stack
 
+    
     # ░░░░░░░░░░░ LeetCode 32 —— 最长有效括号 ░░░░░░░░░░░
-    @staticmethod
-    def longestValidParentheses(s: str) -> int:
+    def longestValidParentheses(
+        self, s: str
+    ) -> int:
         max_len = 0
         stack: List[int] = [-1]  # 哨兵：有效子串起点前的位置
         for i, ch in enumerate(s):
@@ -50,9 +53,11 @@ class StackAlgoUtils:
                     max_len = max(max_len, i - stack[-1])
         return max_len
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 394 —— 字符串解码 ░░░░░░░░░░░░░░
-    @staticmethod
-    def decodeString(s: str) -> str:
+    def decodeString(
+        self, s: str
+    ) -> str:
         stack, multi, res = [], 0, ""
         for c in s:
             if c == '[':
@@ -67,24 +72,13 @@ class StackAlgoUtils:
                 res += c
         return res
 
-    # ░░░░░░░░░░░ LeetCode 739 —— 每日温度 ░░░░░░░░░░░
-    @staticmethod
-    def dailyTemperatures(temperatures: List[int]) -> List[int]:
-        n = len(temperatures)
-        ans: List[int] = [0] * n
-        stack: List[int] = []  # 下标栈，自底→顶温度递减
-        for i, temp in enumerate(temperatures):
-            while stack and temp > temperatures[stack[-1]]:
-                prev = stack.pop()
-                ans[prev] = i - prev
-            stack.append(i)
-        return ans
-
+    
     # ░░░░░░░░░░░░░░ LeetCode 1249 · 移除无效的括号 ░░░░░░░░░░░░░░
-    def minRemoveToMakeValid(s: str) -> str:
+    def minRemoveToMakeValid(
+        self, s: str
+    ) -> str:
         index_to_move = set()
         stack = []
-    
         for i, c in enumerate(s):
             if c not in "()":
                 continue
@@ -94,7 +88,6 @@ class StackAlgoUtils:
                 index_to_move.add(i)
             else:
                 stack.pop()
-        
         index_to_move = index_to_move.union(set(stack))
         string_builder = []
         for i, c in enumerate(s):
