@@ -1,4 +1,4 @@
-class OptimumToolKit:
+class OptimaToolKit:
     # ★★★★★ LeetCode 3181 —— 执行操作可获得的最大总奖励 II（状态压缩 DP · bitset 0-1 背包） ★★★★★
     def maxTotalReward(
         self, rewardValues: List[int]
