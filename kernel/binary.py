@@ -205,6 +205,19 @@ class BinarySearchUtils:
         return ans
 
 
+    # ░░░░░░░░░░░ LeetCode 1385 —— 两个数组间的距离值（排序 + 二分下界） ░░░░░░░░░░░
+    def findTheDistanceValue(
+        self, arr1: List[int], arr2: List[int], d: int
+    ) -> int:
+        arr2.sort()
+        ans = 0
+        for x in arr1:
+            i = bisect_left(arr2, x - d)
+            if i == len(arr2) or arr2[i] > x + d:
+                ans += 1
+        return ans
+
+
 class BinaryAnswerUtils:
     # ░░░░░░░░░░░ LeetCode 274 —— H 指数 ░░░░░░░░░░░
     def hIndex(
