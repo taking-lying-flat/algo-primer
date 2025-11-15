@@ -187,6 +187,24 @@ class BinarySearchUtils:
         return False
 
 
+    # ░░░░░░░░░░░ LeetCode 2300 —— 咒语与药水的成功对数（排序 + 二分下界） ░░░░░░░░░░░
+    def successfulPairs(
+        self, spells: List[int], potions: List[int], success: int
+    ) -> List[int]:
+        ans: List[int] = []
+        potions.sort()
+        for spell in spells:
+            left, right = 0, len(potions)
+            while left < right:
+                mid = (left + right) // 2
+                if spell * potions[mid] >= success:
+                    right = mid
+                else:
+                    left = mid + 1
+            ans.append(len(potions) - left)
+        return ans
+
+
 class BinaryAnswerUtils:
     # ░░░░░░░░░░░ LeetCode 274 —— H 指数 ░░░░░░░░░░░
     def hIndex(
