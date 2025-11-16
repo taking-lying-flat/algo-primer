@@ -102,6 +102,20 @@ class MonoStackUtils:
             st.append(i)
         return ans
 
+
+    # ░░░░░░░░░░░ LeetCode 1475 —— 商品折扣后的最终价格（单调栈） ░░░░░░░░░░░
+    def finalPrices(
+        self, prices: List[int]
+    ) -> List[int]:
+        ans = copy.deepcopy(prices)
+        st = []
+        for i, p in enumerate(prices):
+            while len(st) and p <= prices[st[-1]]:
+                prev = st.pop()
+                ans[prev] = prices[prev] - p
+            st.append(i)
+        return ans
+
     
     # ░░░░░░░░░░░ LeetCode 962 —— 最大宽坡（单调栈） ░░░░░░░░░░░
     def maxWidthRamp(
