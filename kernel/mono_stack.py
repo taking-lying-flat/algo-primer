@@ -88,6 +88,21 @@ class MonotonicStackTemplates:
 
 
 class MonoStackUtils:
+    # ░░░░░░░░░░░ LeetCode 739 —— 每日温度（单调栈 · 下一更大） ░░░░░░░░░░░
+    def dailyTemperatures(
+        self, temperatures: List[int]
+    ) -> List[int]:
+        n = len(temperatures)
+        ans = [0] * n
+        st = []
+        for i, t in enumerate(temperatures):
+            while st and t > temperatures[st[-1]]:
+                prev = st.pop()
+                ans[prev] = i - prev
+            st.append(i)
+        return ans
+
+    
     # ░░░░░░░░░░░ LeetCode 962 —— 最大宽坡（单调栈） ░░░░░░░░░░░
     def maxWidthRamp(
         self, nums: List[int]
