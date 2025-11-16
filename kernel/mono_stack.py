@@ -88,6 +88,26 @@ class MonotonicStackTemplates:
 
 
 class MonoStackUtils:
+    # ░░░░░░░░░░░ LeetCode 962 —— 最大宽坡（单调栈） ░░░░░░░░░░░
+    def maxWidthRamp(
+        self, nums: List[int]
+    ) -> int:
+        n = len(nums)
+        ans = 0
+        st = []
+        
+        for i, x in enumerate(nums):
+            if not st or x <= nums[st[-1]]:
+                st.append(i)
+                
+        for i in range(n - 1, -1, -1):
+            while st and nums[i] >= nums[st[-1]]:
+                j = st.pop()
+                ans = max(ans, i - j)
+                
+        return ans
+
+    
     # ░░░░░░░░░░░ LeetCode 84 —— 柱状图中最大的矩形 ░░░░░░░░░░░
     def largestRectangleArea(
         self, heights: List[int]
