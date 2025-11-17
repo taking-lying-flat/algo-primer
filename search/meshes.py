@@ -151,3 +151,33 @@ class GridSearchToolkit:
                     q.append((dx, dy))
                     grid[dx][dy] = 2
         return max(map(max, dist))
+
+
+    # ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ LeetCode - 694 不同岛屿的数量 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    def numDistinctIslands(
+        self, grid: List[List[int]]
+    ) -> int:
+        m, n = len(grid), len(grid[0])
+        vis = [[False] * n for _ in range(m)]
+
+        def dfs(r0: int, c0: int) -> List[Tuple[int, int]]:
+            stack = [(r0, c0)]
+            vis[r0][c0] = True
+            shape: List[Tuple[int, int]] = []
+            while stack:
+                r, c = stack.pop()
+                shape.append((r - r0, c - c0))
+                for nr, nc in (r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1):
+                    if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 1 and not vis[nr][nc]:
+                        vis[nr][nc] = True
+                        stack.append((nr, nc))
+            return shape
+
+        shapes: Set[Tuple[Tuple[int, int], ...]] = set()
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1 and not vis[i][j]:
+                    shape = dfs(i, j)
+                    canon = tuple(sorted(shape))
+                    shapes.add(canon)
+        return len(shapes)
