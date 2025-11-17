@@ -1,11 +1,8 @@
-from typing import List
-from collections import defaultdict, deque
-
-
 class GraphTheoremToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 207 · 课程表 ░░░░░░░░░░░░░░
-    @staticmethod
-    def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
+    def canFinish(
+        self, numCourses: int, prerequisites: List[List[int]]
+    ) -> bool:
         """
         判断是否可以完成所有课程（检测有向图是否有环）
             1. 构建邻接表和入度数组
@@ -31,9 +28,11 @@ class GraphTheoremToolkit:
         
         return not numCourses
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 207 · 课程表 ░░░░░░░░░░░░░░
-    @staticmethod
-    def canFinish_dfs(numCourses: int, prerequisites: List[List[int]]) -> bool:
+    def canFinish_dfs(
+        self, numCourses: int, prerequisites: List[List[int]]
+    ) -> bool:
         """
         使用三色标记法检测有向图是否有环
             1. 白色: 未访问的节点
@@ -67,9 +66,11 @@ class GraphTheoremToolkit:
                 
         return True
 
+    
     # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II ░░░░░░░░░░░░░░
-    @staticmethod
-    def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+    def findOrder(
+        self, numCourses: int, prerequisites: List[List[int]]
+    ) -> List[int]:
         """返回完成所有课程的顺序（拓扑排序序列）。如果无法完成所有课程（有环），返回空数组"""
         g = defaultdict(list)
         indeg = [0] * numCourses
@@ -88,10 +89,12 @@ class GraphTheoremToolkit:
                     queue.append(u)
         
         return result if len(result) == numCourses else []
+
     
     # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II ░░░░░░░░░░░░░░
-    @staticmethod
-    def findOrder_dfs(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+    def findOrder_dfs(
+        self, numCourses: int, prerequisites: List[List[int]]
+    ) -> List[int]:
         """使用三色标记法返回逆拓扑序"""
         g = defaultdict(list)
         for cur, pre in prerequisites:
