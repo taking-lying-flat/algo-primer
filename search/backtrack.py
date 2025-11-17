@@ -286,3 +286,27 @@ class BacktrackingToolkit:
 
         dfs(0, target)
         return ans
+
+
+    # ░░░░░░░░░░░ LeetCode 216 —— 组合总和 III（回溯 · 剪枝） ░░░░░░░░░░░
+    def combinationSum3(
+        self, k: int, n: int
+    ) -> List[List[int]]:
+        ans = []
+        on_path = []
+
+        def dfs(i: int, left_sum: int) -> None:
+            d = k - len(on_path)
+            if left_sum < 0 or left_sum > (i * 2 - d + 1) * d // 2:
+                return
+            if d == 0:
+                ans.append(on_path.copy())
+                return
+            if i > d:
+                dfs(i - 1, left_sum)
+            on_path.append(i)
+            dfs(i - 1, left_sum - i)
+            on_path.pop()
+
+        dfs(9, n)
+        return ans
