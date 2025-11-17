@@ -17,10 +17,12 @@ def fixed_window_template(nums: List[int], k: int) -> Any:
         # 1. 入：右端点 i 进入窗口，更新 state
         #    例：state += x / cnt[x] += 1 / ...
         ...  # TODO: 按题目更新 state
+        
         left = i - k + 1  # 当前窗口左端点
         if left < 0:
             # 窗口大小不足 k：还没形成第一个完整窗口
             continue
+            
         # 2. 更新：此时窗口 [left, i] 的长度恰好为 k，用 state 更新 ans
         #    例：ans = max(ans, state) / if 满足条件: ans += 1 / ...
         ...  # TODO: 根据题意更新 ans
