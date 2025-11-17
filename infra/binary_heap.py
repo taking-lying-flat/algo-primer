@@ -32,22 +32,13 @@ class MedianFinder:
 
 # ░░░░░░░░░░░░░░ LeetCode 347 - 前K个高频元素 ░░░░░░░░░░░░░░
 @staticmethod
-def topKFrequent(nums: List[int], k: int) -> List[int]:
-    """
-    统计频率 + 最小堆
-        1. 使用 Counter 统计每个元素的出现频率
-        2. 维护大小为 k 的最小堆
-        3. 堆中保存 (频率, 元素) 元组
-        4. 如果新元素频率大于堆顶，替换堆顶
-        5. 最终堆中就是频率最高的 k 个元素
-    """
+def topKFrequent(nums: List[int], k: int) -> List[int]:"
     freq_map = Counter(nums)
     heap = []
     for num, freq in freq_map.items():
         if len(heap) < k:
             heapq.heappush(heap, (freq, num))
-        else:  # 当前频率大于堆顶（最小频率），替换
+        else:
             if freq > heap[0][0]:
                 heapq.heapreplace(heap, (freq, num))
-    
     return [num for _, num in heap]
