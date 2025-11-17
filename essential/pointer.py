@@ -322,3 +322,24 @@ class TwoPointersToolKit:
             return ans
         
         return at_least(k) - at_least(k + 1)
+
+
+    # ★★★★★ ░░░░░░░░░░ LeetCode 220 —— 存在重复元素 III ░░░░░░░░░░ ★★★★★
+    def containsNearbyAlmostDuplicate(
+        self, nums: List[int], indexDiff: int, valueDiff: int
+    ) -> bool:
+        """
+        知识点：
+            - 有序容器：SortedList 维护窗口为有序多重集（允许重复）
+            - 至多 k 滑窗：窗口仅包含最近 indexDiff 个元素（先查→再加→必要时删）
+            - 二分下界：bisect_left(x - valueDiff) 后检查是否 ≤ x + valueDiff
+        """
+        sl = SortedList()
+        for i, x in enumerate(nums):
+            pos = sl.bisect_left(x - valueDiff)
+            if pos < len(sl) and sl[pos] <= x + valueDiff:
+                return True
+            sl.add(x)
+            if i >= indexDiff:
+                sl.remove(nums[i - indexDiff])
+        return False
