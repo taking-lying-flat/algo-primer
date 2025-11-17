@@ -38,3 +38,35 @@ def canonical_shape_D4(
 
     # ④ 8 个候选表示里取字典序最小的作为 canonical 形状
     return min(cand)
+
+
+def canonical_shape_D4_complex(
+    shape: List[complex]
+) -> Tuple[Tuple[int, int], ...]:
+    cand = []
+    
+    transforms = [
+        lambda z:  z,                 # identity
+        lambda z:  complex(z.real, -z.imag),  # conj: (x, y)->(x,-y)
+        lambda z: -z,
+        lambda z: -complex(z.real, -z.imag),  # -conj
+        lambda z:  1j * z,
+        lambda z:  1j * complex(z.real, -z.imag),
+        lambda z: -1j * z,
+        lambda z: -1j * complex(z.real, -z.imag),
+    ]
+    
+    for f in transforms:
+        tmp: List[Tuple[int, int]] = []
+        for z in shape:
+            w = f(z)
+            # w 的实部/虚部是 float，要转回 int
+            x = int(round(w.real))
+            y = int(round(w.imag))
+            tmp.append((x, y))
+            
+        minx = min(x for x, _ in tmp)
+        miny = min(y for _, y in tmp)
+        norm = tuple(sorted((x - minx, y - miny) for x, y in tmp))
+        cand.append(norm)
+    return min(cand)
