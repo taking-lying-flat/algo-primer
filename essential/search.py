@@ -110,3 +110,43 @@ class SearchToolKit:
     4. 8 个编码里取字典序最小的那个作为该岛屿的“规范形状 canonical form”，
        放入一个 set 中去重。
     """
+        m, n = len(grid), len(grid[0])
+        vis = [[False] * n for _ in range(m)]
+
+        def dfs(r0: int, c0: int) -> List[Tuple[int, int]]:
+            stack = [(r0, c0)]
+            vis[r0][c0] = True
+            pts: List[Tuple[int, int]] = []
+            while stack:
+                r, c = stack.pop()
+                pts.append((r - r0, c - c0))
+                for nr, nc in (r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1):
+                    if 0 <= nr < m and 0 <= nc < n and not vis[nr][nc] and grid[nr][nc] == 1:
+                        vis[nr][nc] = True
+                        stack.append((nr, nc))
+            return pts
+        
+        def canonical_shape_D4(shape: List[Tuple[int, int]]) -> Tuple[Tuple[int, int], ...]:
+            cand = []
+            for sx, sy in (1, 1), (-1, 1), (-1, -1), (1, -1):
+                for swap in (0, 1):
+                    tmp = []
+                    for x, y in shape:
+                        px, py = x * sx, y * sy
+                        if swap:
+                            px, py = py, px
+                        tmp.append((px, py))
+                    minx = min(px for px, _ in tmp)
+                    miny = min(py for _, py in tmp)
+                    norm = tuple(sorted((px - minx, py - miny) for px, py in tmp))
+                    cand.append(norm)
+            return min(cand)
+        
+        shapes: Set[Tuple[Tuple[int, int], ...]] = set()
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1 and not vis[i][j]:
+                    pts = dfs(i, j)
+                    shapes.add(canonical_shape_D4(pts))
+        
+        return len(shapes)
