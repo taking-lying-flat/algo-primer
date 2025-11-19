@@ -1,4 +1,14 @@
 class InPlaceModifySuite:
+    # ░░░░░░░░░░░░░░ LeetCode 26 —— 删除有序数组中的重复项 ░░░░░░░░░░░░░░
+    def removeDuplicates(self, nums: List[int]) -> int:
+        k = 1
+        for i in range(1, len(nums)):
+            if nums[i] != nums[i - 1]:
+                nums[k] = nums[i]
+                k += 1
+        return k
+
+    
     # ░░░░░░░░░░░ LeetCode 2273 —— 移除字母异位词后的结果数组 ░░░░░░░░░░░
     def removeAnagrams(
         self, words: List[str]
