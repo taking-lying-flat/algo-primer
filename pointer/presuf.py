@@ -46,3 +46,21 @@ class PrefixSuffixUtils:
         for l, r in zip(left, right):
             ans += max(l, r)
         return ans
+
+
+    # ░░░░░░░░░░░░░░ LeetCode 1930 —— 长度为 3 的不同回文子序列 ░░░░░░░░░░░░░░
+    def countPalindromicSubsequence(
+        self, s: str
+    ) -> int:
+        suf_cnt = Counter(s[1:])
+        pre_set = set()
+        seen = set()
+        for i in range(1, len(s) - 1):
+            mid = s[i]
+            suf_cnt[mid] -= 1
+            if suf_cnt[mid] == 0:
+                del suf_cnt[mid]
+            pre_set.add(s[i - 1])
+            for alpha in pre_set & suf_cnt.keys():
+                seen.add(alpha + mid)
+        return len(seen)
