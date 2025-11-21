@@ -1,4 +1,14 @@
 class FoundationToolKit:
+    # ░░░░░░░░░░░░░░ LeetCode 198 —— 打家劫舍 ░░░░░░░░░░░░░░
+    def rob(nums: List[int]) -> int:
+        @cache
+        def dfs(i: int) -> int:
+            if i < 0:
+                return 0
+            return max(dfs(i - 2) + nums[i], dfs(i - 1))
+        return dfs(len(nums) - 1)
+
+    
     # ░░░░░░░░░░░░░░ LeetCode 3693 —— Climbing Stairs II（爬楼梯 II） ░░░░░░░░░░░░░░
     def climbStairs(
         self, n: int, costs: List[int]
