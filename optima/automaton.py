@@ -122,3 +122,22 @@ class StateMachineToolkit:
                     f[j - 1][0] - p  # 昨天不持有，且多“一个卖出机会”，今天买入
                 )
         return f[-1][0]
+
+
+    # ░░░░░░░░░░░░░░ LeetCode 1262 —— 可被三整除的最大和（状态机 DP） ░░░░░░░░░░░░░░
+    def maxSumDivThree(self, nums: List[int]) -> int:
+        # @cache
+        # def dfs(i: int, j: int) -> int:
+        #     if i < 0:
+        #         return -inf if j else 0
+        #     return max(
+        #         dfs(i - 1, j),
+        #         dfs(i - 1, (j + nums[i]) % 3) + nums[i]
+        #     )
+        # return dfs(len(nums) - 1, 0)
+        f = [[-inf] * 3 for _ in range(len(nums) + 1)]
+        f[0][0] = 0
+        for i, x in enumerate(nums):
+            for j in range(3):
+                f[i + 1][j] = max(f[i][j], f[i][(j + x) % 3] + x)
+        return f[-1][0]
